@@ -1,0 +1,39 @@
+---
+/** Small stroke icons for the contact buttons. Decorative: the button text names the action. */
+interface Props {
+  name: 'instagram' | 'whatsapp' | 'arrow';
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    name === 'instagram' && (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4.2" />
+        <circle cx="17.3" cy="6.7" r=".6" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    name === 'whatsapp' && (
+      <>
+        <path d="M4 20l1.3-4A8.5 8.5 0 1 1 8.4 19z" />
+        <path d="M9 8.6c0 3.4 2.9 6.3 6.3 6.3l1-1.6-2.2-1-1 1a4.6 4.6 0 0 1-2.4-2.4l1-1-1-2.2z" />
+      </>
+    )
+  }
+  {name === 'arrow' && <path d="M5 12h14M13 6l6 6-6 6" />}
+</svg>

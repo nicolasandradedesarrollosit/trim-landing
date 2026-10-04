@@ -1,0 +1,30 @@
+---
+/**
+ * TRIM logo, inlined so it inherits `currentColor` (black on paper, white on ink).
+ * Paths are traced from brand-src/ by scripts/trace-logos.mjs; never edit them by hand.
+ *   badge:    wordmark inside the racing oval (primary logo)
+ *   wordmark: the letters alone (header, giant hero type)
+ */
+import badge from './paths/logo-badge.json';
+import wordmark from './paths/wordmark.json';
+
+interface Props {
+  variant?: 'badge' | 'wordmark';
+  class?: string;
+  /** Accessible name; pass an empty string when a parent element already names it. */
+  label?: string;
+}
+const { variant = 'wordmark', class: className, label = 'TRIM' } = Astro.props;
+const { w, h, d } = variant === 'badge' ? badge : wordmark;
+---
+
+<svg
+  class:list={['block h-auto', className]}
+  viewBox={`0 0 ${w} ${h}`}
+  role={label ? 'img' : undefined}
+  aria-label={label || undefined}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  <path fill="currentColor" fill-rule="evenodd" d={d}></path>
+</svg>

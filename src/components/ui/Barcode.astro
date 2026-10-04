@@ -1,0 +1,28 @@
+---
+/**
+ * Decorative barcode for the hang tag, derived from the garment id so every tag is
+ * different but stable between builds. It encodes nothing scannable.
+ */
+interface Props {
+  value: string;
+  class?: string;
+}
+const { value, class: className } = Astro.props;
+
+// FNV-1a hash seeds a small deterministic generator.
+let seed = 2166136261;
+for (const ch of value) seed = Math.imul(seed ^ ch.charCodeAt(0), 16777619) >>> 0;
+const next = () => ((seed = Math.imul(seed ^ (seed >>> 15), 2246822507) >>> 0) % 1000) / 1000;
+
+const bars: { x: number; w: number }[] = [];
+let x = 0;
+while (x < 96) {
+  const w = 1 + Math.floor(next() * 3);
+  bars.push({ x, w });
+  x += w + 1 + Math.floor(next() * 3);
+}
+---
+
+<svg class={className} viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  {bars.map((b) => <rect x={b.x} y="0" width={b.w} height="28" fill="currentColor" />)}
+</svg>
