@@ -1,0 +1,62 @@
+---
+import Logo from '../ui/Logo.astro';
+import { LEGAL_NAV, NAV, SITE } from '../../config/site';
+import { instagramHandle, instagramUrl, whatsappUrl } from '../../lib/contact';
+import { brandUrl, brandsInStock, getProducts } from '../../lib/content';
+
+const year = new Date().getFullYear();
+const brands = brandsInStock(await getProducts());
+const columns = [
+  { title: 'TRIM', links: NAV.map((l) => ({ href: l.href, label: l.label, external: false })) },
+  {
+    title: 'Marcas en stock',
+    links: brands.map(({ brand }) => ({ href: brandUrl(brand.slug), label: brand.name, external: false })),
+  },
+  {
+    title: 'Contacto',
+    links: [
+      { href: instagramUrl, label: `Instagram ${instagramHandle}`, external: true },
+      { href: whatsappUrl(), label: 'WhatsApp', external: true },
+      { href: `mailto:${SITE.email}`, label: SITE.email, external: false },
+    ],
+  },
+  { title: 'Legales', links: LEGAL_NAV.map((l) => ({ ...l, external: false })) },
+];
+---
+
+<footer class="block-ink border-t border-rule-dark">
+  <div class="wrap pt-16 pb-10">
+    <div class="grid items-end gap-8 border-b border-rule-dark pb-12 md:grid-cols-[minmax(0,26rem)_1fr]">
+      <a href="/" class="text-paper" aria-label={`${SITE.name}, ir al inicio`}>
+        <Logo variant="badge" class="w-full max-w-[26rem]" label="" />
+      </a>
+      <p class="label text-fog md:justify-self-end md:text-right">
+        {SITE.tagline}<br />{SITE.city}, Argentina
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-4">
+      {
+        columns.map((col) => (
+          <nav aria-label={`${col.title} (pie de página)`}>
+            <h2 class="label mb-4 text-fog">{col.title}</h2>
+            <ul role="list" class="grid gap-2 text-sm">
+              {col.links.map((l) => (
+                <li>
+                  <a class="link" href={l.href} rel={l.external ? 'noopener' : undefined} target={l.external ? '_blank' : undefined}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div class="grid gap-3 border-t border-rule-dark pt-6 text-xs text-fog md:grid-cols-[1fr_auto] md:gap-10">
+      <p class="max-w-3xl">{SITE.disclaimer}</p>
+      <p class="label">© {year} {SITE.name}</p>
+    </div>
+  </div>
+</footer>

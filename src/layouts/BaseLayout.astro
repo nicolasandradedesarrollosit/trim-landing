@@ -1,0 +1,46 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/index.css';
+
+import SEO, { type SeoProps } from '../components/seo/SEO.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { SITE } from '../config/site';
+import { graph } from '../lib/seo';
+
+interface Props {
+  seo: SeoProps;
+  /** Extra JSON-LD nodes (CollectionPage, FAQPage, BreadcrumbList…). */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { seo, jsonLd = [] } = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Preload only the faces visible above the fold. -->
+    <Font cssVariable="--font-shoulders" preload={[{ weight: 900, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-archivo" preload={[{ weight: 400, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-plex-mono" preload={[{ weight: 500, style: 'normal', subset: 'latin' }]} />
+    <SEO {...seo} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#edeeef" />
+    <JsonLd data={graph(...jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

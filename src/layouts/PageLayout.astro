@@ -1,0 +1,24 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { breadcrumbLd, crumbs } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Mono label above the title. */
+  eyebrow?: string;
+  noindex?: boolean;
+}
+const { title, description, eyebrow, noindex } = Astro.props;
+---
+
+<BaseLayout seo={{ title, description, noindex }} jsonLd={[breadcrumbLd(crumbs({ name: title, href: Astro.url.pathname }))]}>
+  <header class="wrap grid gap-5 border-b border-ink pt-14 pb-10">
+    {eyebrow && <p class="label text-steel">{eyebrow}</p>}
+    <h1 class="display text-headline">{title}</h1>
+    <p class="max-w-2xl text-lg text-graphite">{description}</p>
+  </header>
+  <div class="wrap pt-12 pb-[var(--space-section)]">
+    <div class="prose max-w-read"><slot /></div>
+  </div>
+</BaseLayout>

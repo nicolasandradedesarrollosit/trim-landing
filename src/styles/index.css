@@ -1,0 +1,349 @@
+/*
+ * TRIM design system (Tailwind CSS v4).
+ *
+ * - @theme:      design tokens, exposed as Tailwind utilities (bg-paper, text-steel,
+ *                font-display, font-mono…).
+ * - @layer base: element defaults.
+ * - @layer components: patterns reused across pages (container, labels, buttons, the
+ *                hang-tag product card, black blocks, marquee, prose). One-off layout
+ *                lives in Tailwind utilities directly in the markup.
+ *
+ * Direction: Swiss editorial (giant condensed type, mono micro-labels, hard edges) in
+ * the logo's black and white, with chrome reserved for the four-point star. See docs/DESIGN.md.
+ */
+@import 'tailwindcss';
+
+@theme {
+  /* Colour: monochrome from the logo; chrome only on the star (see Star.astro) */
+  --color-paper: #edeeef;
+  --color-tag: #ffffff;
+  --color-ink: #0b0b0c;
+  --color-graphite: #2b2c2e;
+  --color-steel: #63666b;
+  --color-rule: #c4c7cb;
+  --color-rule-dark: #313236;
+  --color-fog: #a7abb0;
+
+  /* Type (Astro Fonts API, see astro.config.mjs) */
+  --font-display: var(--font-shoulders), 'Arial Narrow', Impact, sans-serif;
+  --font-sans: var(--font-archivo), Arial, 'Helvetica Neue', sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'Courier New', monospace;
+
+  --text-2xs: 0.6875rem;
+  /* Display scale: condensed face, so sizes run large */
+  --text-mega: clamp(5.5rem, 2rem + 17vw, 17rem);
+  --text-giant: clamp(3.25rem, 1.5rem + 8vw, 8.5rem);
+  --text-headline: clamp(2.25rem, 1.4rem + 3.6vw, 4.25rem);
+  --text-title: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
+
+  /* Widths */
+  --container-read: 42rem;
+  --container-site: 90rem;
+}
+
+:root {
+  --gutter: clamp(1rem, 0.4rem + 2.4vw, 2.5rem);
+  --col-gap: clamp(1rem, 0.5rem + 1.6vw, 2rem);
+  --space-section: clamp(4.5rem, 3rem + 5vw, 9rem);
+  /* Film grain for black blocks: an inline SVG turbulence tile, no image request. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------ utilities */
+/* Declared as utilities (not components) so other classes can @apply them. */
+
+/* Mono micro-label: the voice of tags, specs and captions */
+@utility label {
+  @apply font-mono text-2xs font-medium tracking-[0.08em] uppercase;
+}
+
+/* Condensed display type */
+@utility display {
+  @apply font-display font-black uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------- base */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Keeps anchor targets clear of the sticky header (WCAG 2.4.11). */
+    scroll-padding-top: 4.5rem;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+  }
+  h1,
+  h2,
+  h3 {
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  b,
+  strong {
+    font-weight: 700;
+  }
+  a {
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      opacity 180ms ease;
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------- components */
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: var(--container-site);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .skip-link {
+    @apply absolute left-4 z-50 bg-ink px-4 py-2 text-paper;
+    top: -10rem;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  /* Section opener: giant title left, mono aside right, hard rule under it */
+  .opener {
+    @apply mb-10 grid items-end gap-4 border-b border-current pb-4 md:grid-cols-[1fr_auto];
+  }
+  .opener__title {
+    @apply display text-giant;
+  }
+
+  /* Full-bleed black block with grain */
+  .block-ink {
+    @apply relative isolate bg-ink text-paper;
+  }
+  .block-ink::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--grain);
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2.5 border border-ink bg-ink px-5 py-3 font-mono text-xs font-medium tracking-[0.06em] text-paper uppercase no-underline;
+  }
+  .btn:hover {
+    @apply bg-paper text-ink;
+  }
+  .btn--ghost {
+    @apply bg-transparent text-ink;
+  }
+  .btn--ghost:hover {
+    @apply bg-ink text-paper;
+  }
+  /* Buttons on black blocks invert */
+  .btn--light {
+    @apply border-paper bg-paper text-ink;
+  }
+  .btn--light:hover {
+    @apply bg-transparent text-paper;
+  }
+  .btn--light-ghost {
+    @apply border-paper bg-transparent text-paper;
+  }
+  .btn--light-ghost:hover {
+    @apply bg-paper text-ink;
+  }
+  .btn svg {
+    @apply size-4 flex-none;
+  }
+
+  /* Quiet link with an underline that appears on hover */
+  .link {
+    @apply no-underline hover:underline;
+  }
+
+  /* Brand filter chips (catalogue) */
+  .chip {
+    @apply inline-flex items-baseline gap-1.5 border border-ink px-3 py-1.5 font-mono text-xs tracking-[0.04em] uppercase no-underline hover:bg-ink hover:text-paper;
+  }
+  .chip[aria-current] {
+    @apply bg-ink text-paper;
+  }
+  .chip__count {
+    @apply text-2xs opacity-60;
+  }
+
+  /* Editorial photos: monochrome to sit inside the logo's palette */
+  .photo-mono {
+    filter: grayscale(1) contrast(1.08);
+  }
+
+  /* ---- Hang-tag product card (ProductCard.astro) ---- */
+  /* Photo on top, tag fills the rest so every card in a row ends at the same line */
+  .tag {
+    @apply grid min-w-0 grid-rows-[auto_1fr];
+  }
+  .tag__media {
+    @apply relative overflow-hidden bg-rule;
+  }
+  .tag__media img {
+    @apply aspect-[4/5] w-full object-cover;
+    transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .tag:hover .tag__media img {
+    transform: scale(1.03);
+  }
+  .tag__flag {
+    @apply label absolute top-3 left-3 bg-ink px-2 py-1 text-paper;
+  }
+  .tag__note {
+    @apply label absolute right-3 bottom-3 bg-paper/90 px-2 py-1 text-steel;
+  }
+  /* The card under the photo is the hang tag: white stock, punched hole, perforation */
+  .tag__body {
+    @apply relative flex flex-col gap-3 bg-tag px-4 pt-7 pb-4;
+    border-top: 1px dashed var(--color-fog);
+  }
+  .tag__body::before {
+    content: '';
+    position: absolute;
+    top: 0.65rem;
+    left: 50%;
+    width: 0.7rem;
+    height: 0.7rem;
+    translate: -50% 0;
+    border-radius: 999px;
+    background: var(--color-paper);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.25);
+  }
+  .tag__brand {
+    @apply label text-steel;
+  }
+  .tag__name {
+    @apply display text-[1.75rem] leading-[0.95];
+  }
+  .tag__specs {
+    @apply grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-y border-rule py-2.5 font-mono text-xs;
+  }
+  .tag__specs dt {
+    @apply text-steel uppercase;
+  }
+  /* Pushed to the bottom of the tag: barcode, price and button line up across a row */
+  .tag__foot {
+    @apply mt-auto flex items-end justify-between gap-3;
+  }
+  .tag__price {
+    @apply font-mono text-sm font-medium whitespace-nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .tag--sold {
+    @apply opacity-55;
+  }
+  .tag--sold .tag__media img {
+    filter: grayscale(1);
+  }
+
+  /* Product grid: 1 → 2 → 3 → 4 columns */
+  .shelf {
+    @apply grid grid-cols-1 gap-x-[var(--col-gap)] gap-y-12 min-[30rem]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  /* ---- Marquee (BrandStrip.astro): two copies of the list scroll as one ---- */
+  .marquee {
+    @apply flex overflow-hidden;
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .marquee__track {
+    @apply flex flex-none items-center;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* ---- FAQ ---- */
+  .faq {
+    @apply border-t border-ink;
+  }
+  .faq summary {
+    @apply flex cursor-pointer list-none items-baseline justify-between gap-6 py-5 text-lg font-bold;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: '+';
+    @apply font-mono text-xl font-normal;
+  }
+  .faq[open] summary::after {
+    content: '−';
+  }
+  .faq__answer {
+    @apply max-w-2xl pb-6 text-graphite;
+  }
+
+  /* ---- Long-form text (legal pages) ---- */
+  .prose {
+    @apply text-graphite;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  .prose > * + * {
+    margin-top: 1.1em;
+  }
+  .prose h2 {
+    @apply font-sans text-xl font-bold text-ink;
+    margin-top: 2.2em;
+  }
+  .prose a {
+    @apply text-ink underline;
+  }
+  .prose ul {
+    list-style: square;
+    padding-left: 1.25em;
+  }
+  .prose li + li {
+    margin-top: 0.4em;
+  }
+}
