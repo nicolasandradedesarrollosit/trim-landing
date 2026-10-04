@@ -1,0 +1,95 @@
+---
+/**
+ * One garment as a hang tag: photo, then a white tag with brand, name, specs, a
+ * barcode stub, the price and the WhatsApp "Consultar" button.
+ * The article id is the product id, so /catalogo/#<id> links straight to it.
+ */
+import { Image } from 'astro:assets';
+import Barcode from '../ui/Barcode.astro';
+import Icon from '../ui/Icon.astro';
+import { CONDITION_LABEL, STATUS_LABEL, getCategory } from '../../config/site';
+import { whatsappUrl, productMessage } from '../../lib/contact';
+import { brandOf, formatPrice, refCode, type Product } from '../../lib/content';
+
+interface Props {
+  product: Product;
+  /** Heading level inside the page outline. */
+  as?: 'h2' | 'h3';
+  /** Eager-load the first cards above the fold. */
+  eager?: boolean;
+}
+const { product, as: Heading = 'h3', eager = false } = Astro.props;
+const { data } = product;
+const brand = brandOf(product);
+const price = formatPrice(data.price);
+const sold = data.status === 'vendido';
+const titleId = `${product.id}-title`;
+---
+
+<article id={product.id} class:list={['tag', { 'tag--sold': sold }]} aria-labelledby={titleId}>
+  <div class="tag__media">
+    <Image
+      src={data.image}
+      alt={data.imageAlt}
+      width={720}
+      widths={[360, 540, 720]}
+      sizes="(min-width: 80rem) 22vw, (min-width: 64rem) 30vw, (min-width: 30rem) 46vw, 92vw"
+      loading={eager ? 'eager' : 'lazy'}
+    />
+    {data.status !== 'disponible' && <span class="tag__flag">{STATUS_LABEL[data.status]}</span>}
+    {data.illustrative && <span class="tag__note">Foto ilustrativa</span>}
+  </div>
+
+  <div class="tag__body">
+    <p class="tag__brand">{brand.name} · {getCategory(data.category)?.name}</p>
+    <Heading id={titleId} class="tag__name">{data.name}</Heading>
+
+    <dl class="tag__specs">
+      <dt>Talles</dt>
+      <dd>{data.sizes.join(' · ')}</dd>
+      <dt>Estado</dt>
+      <dd>{CONDITION_LABEL[data.condition]}</dd>
+      {
+        data.color && (
+          <>
+            <dt>Color</dt>
+            <dd>{data.color}</dd>
+          </>
+        )
+      }
+      {
+        data.season && (
+          <>
+            <dt>Temp.</dt>
+            <dd>{data.season}</dd>
+          </>
+        )
+      }
+    </dl>
+
+    <div class="tag__foot">
+      <div class="grid gap-1">
+        <Barcode value={product.id} class="h-7 w-20 text-ink" />
+        <span class="font-mono text-[0.625rem] tracking-[0.12em] text-steel">{refCode(product)}</span>
+      </div>
+      <p class="grid justify-items-end gap-0.5">
+        <span class="label text-steel">Precio</span>
+        <span class="tag__price">{price ?? 'A consultar'}</span>
+      </p>
+    </div>
+
+    {
+      sold ? (
+        <p class="btn btn--ghost pointer-events-none opacity-60">Vendido</p>
+      ) : (
+        <a class="btn" href={whatsappUrl(productMessage(product))} rel="noopener" target="_blank">
+          <Icon name="whatsapp" />
+          Consultar
+          <span class="sr-only">
+            {brand.name} {data.name} por WhatsApp (se abre en otra pestaña)
+          </span>
+        </a>
+      )
+    }
+  </div>
+</article>

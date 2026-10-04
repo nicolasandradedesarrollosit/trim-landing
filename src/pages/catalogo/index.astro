@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CatalogView from '../../components/catalog/CatalogView.astro';
+import { catalogUrl, getProducts } from '../../lib/content';
+import { breadcrumbLd, collectionLd, crumbs } from '../../lib/seo';
+
+const products = await getProducts();
+const title = 'Catálogo';
+const description =
+  'Todas las prendas originales en stock: buzos, remeras y más de Corteiz, Supreme, Stüssy y otras hyper-brands. Consultá talle y precio por WhatsApp.';
+---
+
+<BaseLayout
+  seo={{ title: 'Catálogo de hyper-brands originales', description }}
+  jsonLd={[
+    collectionLd({ name: title, description, path: catalogUrl, products }),
+    breadcrumbLd(crumbs({ name: title, href: catalogUrl })),
+  ]}
+>
+  <CatalogView
+    all={products}
+    products={products}
+    title={title}
+    intro="Todo lo que tenemos ahora. Tocá “Consultar” en cualquier prenda y te respondemos por WhatsApp con talle, precio y envío."
+  />
+</BaseLayout>

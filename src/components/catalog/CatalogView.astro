@@ -1,0 +1,56 @@
+---
+/**
+ * Shared body of /catalogo/ and /catalogo/{marca}/: giant title, brand filter (plain
+ * links, no JS) and the shelf of hang tags.
+ */
+import ProductCard from './ProductCard.astro';
+import { brandUrl, brandsInStock, catalogUrl, type Product } from '../../lib/content';
+
+interface Props {
+  /** Every product, for the filter counts. */
+  all: Product[];
+  /** Products shown on this page. */
+  products: Product[];
+  title: string;
+  intro: string;
+  /** Active brand slug, if any. */
+  active?: string;
+}
+const { all, products, title, intro, active } = Astro.props;
+const brands = brandsInStock(all);
+const available = products.filter((p) => p.data.status === 'disponible').length;
+---
+
+<header class="wrap pt-8 pb-10">
+  <p class="label flex justify-between border-b border-ink pb-3">
+    <span>Catálogo</span>
+    <span>{products.length} prendas · {available} disponibles</span>
+  </p>
+  <h1 class="display mt-6 pt-[0.14em] text-mega break-words">{title}</h1>
+  <p class="mt-6 max-w-2xl text-lg text-graphite">{intro}</p>
+
+  <nav aria-label="Filtrar por marca" class="mt-8">
+    <ul role="list" class="flex flex-wrap gap-2">
+      <li>
+        <a href={catalogUrl} class="chip" aria-current={active ? undefined : 'page'}>
+          Todas <span class="chip__count">{all.length}</span>
+        </a>
+      </li>
+      {
+        brands.map(({ brand, products: items }) => (
+          <li>
+            <a href={brandUrl(brand.slug)} class="chip" aria-current={active === brand.slug ? 'page' : undefined}>
+              {brand.name} <span class="chip__count">{items.length}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<section class="wrap pb-[var(--space-section)]" aria-label="Prendas">
+  <div class="shelf">
+    {products.map((p, i) => <ProductCard product={p} as="h2" eager={i < 2} />)}
+  </div>
+</section>

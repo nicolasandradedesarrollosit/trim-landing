@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CatalogView from '../../components/catalog/CatalogView.astro';
+import { brandUrl, brandsInStock, catalogUrl, getProducts } from '../../lib/content';
+import { breadcrumbLd, collectionLd, crumbs } from '../../lib/seo';
+
+/** One page per brand with at least one garment; brands without stock have no page. */
+export const getStaticPaths = (async () => {
+  const all = await getProducts();
+  return brandsInStock(all).map(({ brand, products }) => ({ params: { marca: brand.slug }, props: { brand, products, all } }));
+}) satisfies GetStaticPaths;
+
+const { brand, products, all } = Astro.props;
+const path = brandUrl(brand.slug);
+const description = `${brand.name} original en Argentina: ${products.length} ${products.length === 1 ? 'prenda' : 'prendas'} en el catálogo de TRIM. Consultá talle y precio por WhatsApp.`;
+// Thin brand pages stay out of the index until they have a real shelf.
+const noindex = products.length < 3;
+---
+
+<BaseLayout
+  seo={{ title: `${brand.name} original`, description, noindex }}
+  jsonLd={[
+    collectionLd({ name: `${brand.name} en TRIM`, description, path, products }),
+    breadcrumbLd(crumbs({ name: 'Catálogo', href: catalogUrl }, { name: brand.name, href: path })),
+  ]}
+>
+  <CatalogView
+    all={all}
+    products={products}
+    title={brand.name}
+    intro={`Las prendas de ${brand.name} que tenemos ahora. ¿Buscás otra? Escribinos y te decimos si la podemos conseguir.`}
+    active={brand.slug}
+  />
+</BaseLayout>
