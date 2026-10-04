@@ -1,0 +1,87 @@
+---
+/**
+ * The wordmark is the headline: it spans the whole container, with mono labels above
+ * and a three-column band below (photo · pitch · brands in stock).
+ */
+import { Image } from 'astro:assets';
+import Logo from '../ui/Logo.astro';
+import Star from '../ui/Star.astro';
+import Icon from '../ui/Icon.astro';
+import heroPhoto from '../../assets/photos/hero-black-hoodie.jpg';
+import { SITE } from '../../config/site';
+import { whatsappUrl } from '../../lib/contact';
+import { brandUrl, brandsInStock, catalogUrl, type Product } from '../../lib/content';
+
+interface Props {
+  products: Product[];
+}
+const { products } = Astro.props;
+const available = products.filter((p) => p.data.status === 'disponible').length;
+const brands = brandsInStock(products);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section class="wrap pt-6 pb-14 md:pb-20" aria-labelledby="hero-title">
+  <div class="label grid grid-cols-2 gap-x-4 gap-y-1 border-b border-ink pb-3 md:grid-cols-4">
+    <span>TRIM®</span>
+    <span class="max-md:hidden">Hyper-brands originales</span>
+    <span class="max-md:hidden">{SITE.city}, AR</span>
+    <span class="text-right">{pad(available)} prendas disponibles</span>
+  </div>
+
+  <h1 id="hero-title" class="relative mt-5 mb-8 md:mt-7 md:mb-10">
+    <Logo variant="wordmark" class="w-full" label="" />
+    <span class="sr-only">{SITE.name}: {SITE.tagline}</span>
+  </h1>
+
+  <div class="grid gap-x-[var(--col-gap)] gap-y-10 md:grid-cols-12">
+    <figure class="relative md:col-span-5 lg:col-span-4">
+      <Image
+        src={heroPhoto}
+        alt="Persona con buzo y pantalón negros parada sobre una roca frente al mar, en blanco y negro."
+        width={960}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 64rem) 30vw, (min-width: 48rem) 40vw, 92vw"
+        loading="eager"
+        fetchpriority="high"
+        class="photo-mono aspect-[4/5] w-full object-cover object-[50%_35%]"
+      />
+      <Star class="absolute -top-8 -right-1 w-20 md:-top-10 md:-right-12 md:w-28" spin edge />
+      <figcaption class="label mt-2 text-steel">Foto: Icee Dc / Unsplash</figcaption>
+    </figure>
+
+    <div class="grid content-start gap-6 md:col-span-7 lg:col-span-5">
+      <p class="display text-headline leading-[0.92]">Corteiz, Supreme, Stüssy y más. Originales, acá.</p>
+      <p class="max-w-md text-lg text-graphite">
+        Compramos en tiendas oficiales y en cada drop. Vos elegís del catálogo y lo cerramos por WhatsApp: talle, precio y
+        envío a todo el país.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href={catalogUrl} class="btn">Ver catálogo <Icon name="arrow" /></a>
+        <a href={whatsappUrl()} class="btn btn--ghost" rel="noopener" target="_blank">
+          <Icon name="whatsapp" /> Escribinos
+        </a>
+      </div>
+    </div>
+
+    <nav aria-labelledby="hero-brands" class="md:col-span-12 lg:col-span-3">
+      <h2 id="hero-brands" class="label mb-3 border-b border-ink pb-2">Marcas en stock</h2>
+      <ul role="list" class="grid font-mono text-sm md:grid-cols-3 md:gap-x-[var(--col-gap)] lg:grid-cols-1">
+        {
+          brands.map(({ brand, products: items }) => (
+            <li>
+              <a
+                href={brandUrl(brand.slug)}
+                class="flex items-baseline gap-2 border-b border-rule py-1.5 no-underline hover:bg-ink hover:text-paper"
+              >
+                <span>{brand.name}</span>
+                <span class="flex-1 translate-y-[-0.2em] border-b border-dotted border-current opacity-40" />
+                <span class="tabular-nums">{pad(items.length)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</section>

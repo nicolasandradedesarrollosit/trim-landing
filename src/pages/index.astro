@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import BrandStrip from '../components/home/BrandStrip.astro';
+import InStock from '../components/home/InStock.astro';
+import Cities from '../components/home/Cities.astro';
+import HowToBuy from '../components/home/HowToBuy.astro';
+import Originals from '../components/home/Originals.astro';
+import Faq from '../components/home/Faq.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { SITE } from '../config/site';
+import { getProducts } from '../lib/content';
+import { faqLd } from '../lib/seo';
+
+const products = await getProducts();
+// Featured first; top up with the newest available garments so the shelf is never short.
+const FEATURED_MAX = 4;
+const featured = products.filter((p) => p.data.featured).slice(0, FEATURED_MAX);
+const topUp = products.filter((p) => !p.data.featured && p.data.status === 'disponible');
+const shelf = [...featured, ...topUp].slice(0, FEATURED_MAX);
+---
+
+<BaseLayout seo={{ title: SITE.name, description: SITE.description }} jsonLd={[faqLd()]}>
+  <Hero products={products} />
+  <BrandStrip />
+  <InStock featured={shelf} total={products.length} />
+  <Cities />
+  <HowToBuy />
+  <Originals />
+  <Faq />
+  <FinalCta />
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Star from '../components/ui/Star.astro';
+import { catalogUrl } from '../lib/content';
+import { whatsappUrl } from '../lib/contact';
+---
+
+<BaseLayout seo={{ title: 'Página no encontrada', description: 'La página que buscás no existe o fue movida.', noindex: true }}>
+  <section class="wrap grid justify-items-start gap-6 pt-12 pb-[var(--space-section)]">
+    <p class="label w-full border-b border-ink pb-3">Error 404</p>
+    <h1 class="display relative text-mega">
+      Agotado
+      <Star class="absolute -top-6 -right-2 w-16 md:-right-14 md:w-20" edge />
+    </h1>
+    <p class="max-w-xl text-lg text-graphite">
+      Esta página no existe o la prenda ya no está publicada. Mirá lo que hay en el catálogo o preguntanos por WhatsApp.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a class="btn" href={catalogUrl}>Ir al catálogo</a>
+      <a class="btn btn--ghost" href={whatsappUrl()} rel="noopener" target="_blank">Escribinos</a>
+    </div>
+  </section>
+</BaseLayout>

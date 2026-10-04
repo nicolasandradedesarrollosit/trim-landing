@@ -1,0 +1,24 @@
+---
+/** Featured garments as hang tags, with a link to the full catalogue. */
+import ProductCard from '../catalog/ProductCard.astro';
+import Icon from '../ui/Icon.astro';
+import { catalogUrl, type Product } from '../../lib/content';
+
+interface Props {
+  featured: Product[];
+  total: number;
+}
+const { featured, total } = Astro.props;
+---
+
+<section id="stock" class="wrap section" aria-labelledby="stock-title">
+  <div class="opener">
+    <h2 id="stock-title" class="opener__title">En stock</h2>
+    <a href={catalogUrl} class="label link flex items-center gap-2">
+      Ver las {total} prendas del catálogo <Icon name="arrow" class="size-4" />
+    </a>
+  </div>
+  <div class="shelf">
+    {featured.map((p) => <ProductCard product={p} />)}
+  </div>
+</section>
