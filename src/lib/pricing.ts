@@ -5,7 +5,7 @@
 import { PRICING } from '../config/pricing';
 
 export interface Rate {
-  /** ARS per USD, "venta". */
+  /** ARS per USD: the API's "venta" plus PRICING.rosarioAdjustment. */
   venta: number;
   /** ISO date of the quote. */
   updatedAt: string;
@@ -28,12 +28,15 @@ const time = new Intl.DateTimeFormat('es-AR', {
 /** "4/10, 17:52" in Buenos Aires time. */
 export const formatRateTime = (iso: string) => time.format(new Date(iso));
 
-/** Reads the live quote. Throws on network errors, timeouts or an unexpected payload. */
+/**
+ * Reads the live quote and adds PRICING.rosarioAdjustment to "venta".
+ * Throws on network errors, timeouts or an unexpected payload.
+ */
 export async function fetchRate(): Promise<Rate> {
   const res = await fetch(PRICING.rateUrl, { cache: 'no-store', signal: AbortSignal.timeout(PRICING.timeoutMs) });
   if (!res.ok) throw new Error(`Rate API answered ${res.status}`);
   const data = (await res.json()) as { venta?: unknown; fechaActualizacion?: unknown };
   if (typeof data.venta !== 'number' || !(data.venta > 0)) throw new Error('Rate API: missing "venta"');
   if (typeof data.fechaActualizacion !== 'string') throw new Error('Rate API: missing "fechaActualizacion"');
-  return { venta: data.venta, updatedAt: data.fechaActualizacion };
+  return { venta: data.venta + PRICING.rosarioAdjustment, updatedAt: data.fechaActualizacion };
 }

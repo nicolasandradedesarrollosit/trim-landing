@@ -108,10 +108,10 @@ public/brand/             # traced logos (+ white variants), star mark, app icon
 
 Garments are priced in **USD** (`priceUsd` in each product file) and shown in **ARS** at the dollar blue "venta" rate:
 
-- Source: [DolarAPI](https://dolarapi.com) `/v1/dolares/blue` — public, free, no key, CORS enabled. There is no public API for the Rosario blue rate (infodolar has none, and the old Rosario endpoints of other projects are offline); the national blue tracks it within a few pesos.
-- **Live only, no fallback.** The HTML ships with no peso amounts (`…` placeholders). `RateNote.astro` (shown above every shelf) fetches the rate in the browser on every visit and fills in every `[data-usd]` price, then shows "Dólar blue venta $ 1.560 · 4/10, 17:52".
+- Source: [DolarAPI](https://dolarapi.com) `/v1/dolares/blue` — public, free, no key, CORS enabled. There is no public API for the Rosario blue rate (infodolar has none, and the old Rosario endpoints of other projects are offline); so the site uses the national blue "venta" plus `PRICING.rosarioAdjustment` ($20 by default) as the Rosario rate.
+- **Live only, no fallback.** The HTML ships with no peso amounts (`…` placeholders). `RateNote.astro` (shown above every shelf) fetches the rate in the browser on every visit and fills in every `[data-usd]` price, then shows "Dólar blue Rosario $ 1.580 · 4/10, 17:52" (API $1.560 + $20).
 - **If the rate cannot be read** (API down, timeout after `PRICING.timeoutMs`, HTTP error, unexpected payload), every price shows "Sin cotización" and the note says "Sin cotización del dólar. Probá en un rato." There is deliberately no fallback rate and no build-time peso price: a stale or guessed rate would show a wrong amount when someone asks to buy. Without JavaScript, a `<noscript>` note explains that peso prices need it. The USD price is always shown.
-- Rounding: up to the next `PRICING.roundTo` ($1.000 by default). Change URL, timeout and rounding in `src/config/pricing.ts`; the texts (loading, rate, error) are under `pricing` and `product.priceUsd` in `copy.json`.
+- Rounding: up to the next `PRICING.roundTo` ($1.000 by default). Change URL, Rosario adjustment, timeout and rounding in `src/config/pricing.ts`; the texts (loading, rate, error) are under `pricing` and `product.priceUsd` in `copy.json`.
 
 ## Operations
 

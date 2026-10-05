@@ -131,7 +131,7 @@
   },
   "pricing": {
     "loading": "Buscando cotización del dólar…",
-    "rate": "Dólar blue venta {rate} · {time}",
+    "rate": "Dólar blue Rosario {rate} · {time}",
     "error": "Sin cotización del dólar. Probá en un rato.",
     "noscript": "Activá JavaScript para ver los precios en pesos.",
     "pending": "…",
