@@ -8,7 +8,7 @@
 
 Researched on Pinterest while defining the direction (October 2026):
 
-- **Layout**: pin "Hauss Website Page Template for Webflow" — <https://ar.pinterest.com/pin/1125968743678190/>. Taken from it: the full-width wordmark as headline, mono index labels in a row above it, and the black block with stair-stepped giant numerals tagged with cities. Our version makes the numerals mean something (how many brands TRIM carries from each city, rising from fewest to most; see `Cities.astro`).
+- **Layout**: pin "Hauss Website Page Template for Webflow" — <https://ar.pinterest.com/pin/1125968743678190/>. Taken from it: the full-width wordmark as headline, mono index labels in a row above it, and giant condensed section titles.
 - **Graphic system**: Pinterest search "y2k streetwear graphic design poster star chrome" — chrome four-point stars and orbit ellipses. It maps directly onto TRIM's own assets: the star in the "R" and the racing oval of the badge logo. We draw our own star (`public/brand/mark.svg`, `Star.astro`); nothing is copied from the pins.
 
 Deliberately avoided: the neon-green-on-black "BUILT DIFFERENT" streetwear template that dominates the same searches.
@@ -54,7 +54,7 @@ All text is in `src/config/copy.json`. Write like a reseller's Instagram, not li
 ## 5. Layout
 
 - Container `.wrap`: max 90rem, fluid gutter.
-- Sections alternate paper and full-bleed black blocks (`.block-ink`, with a faint SVG film grain): hero → brand marquee (ink) → En stock → cities (ink) → cómo comprar → originales (ink) → preguntas → escribinos (ink, photo) → footer (ink).
+- Sections alternate paper and full-bleed black blocks (`.block-ink`, with a faint SVG film grain): hero → brand marquee (ink) → En stock → cómo comprar → originales (ink) → preguntas → escribinos (ink, photo) → footer (ink).
 - Section opener (`.opener`): giant title left, mono aside right, rule underneath.
 - Shelf (`.shelf`): 1 → 2 → 3 → 4 columns; cards in a row end on the same line.
 

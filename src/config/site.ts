@@ -1,6 +1,6 @@
 /**
- * Central site configuration: brand data, contact channels, brands, cities, categories
- * and routes. Customer-facing text does NOT live here: it is in ./copy.json (read through
+ * Central site configuration: brand data, contact channels, brands, categories and
+ * routes. Customer-facing text does NOT live here: it is in ./copy.json (read through
  * src/lib/copy.ts). Identifiers are English.
  */
 import copy from './copy.json';
@@ -35,29 +35,20 @@ export const CONTACT = {
   whatsapp: '5491100000000',
 } as const;
 
-/** Cities the brands come from (the stair-step block on the home page). */
-export const CITIES = [
-  { code: 'LDN', name: 'Londres' },
-  { code: 'NYC', name: 'Nueva York' },
-  { code: 'TYO', name: 'Tokio' },
-  { code: 'LA', name: 'Los Ángeles' },
-] as const;
-export type CityCode = (typeof CITIES)[number]['code'];
-
-/** Brands TRIM carries. `city` is where the brand is from. Names only: never their logos. */
+/** Brands TRIM carries. Names only: never their logos. */
 export const BRANDS = [
-  { slug: 'corteiz', name: 'Corteiz', city: 'LDN' },
-  { slug: 'palace', name: 'Palace', city: 'LDN' },
-  { slug: 'trapstar', name: 'Trapstar', city: 'LDN' },
-  { slug: 'broken-planet', name: 'Broken Planet', city: 'LDN' },
-  { slug: 'supreme', name: 'Supreme', city: 'NYC' },
-  { slug: 'denim-tears', name: 'Denim Tears', city: 'NYC' },
-  { slug: 'kith', name: 'Kith', city: 'NYC' },
-  { slug: 'bape', name: 'BAPE', city: 'TYO' },
-  { slug: 'human-made', name: 'Human Made', city: 'TYO' },
-  { slug: 'stussy', name: 'Stüssy', city: 'LA' },
-  { slug: 'sp5der', name: 'Sp5der', city: 'LA' },
-] as const satisfies readonly { slug: string; name: string; city: CityCode }[];
+  { slug: 'corteiz', name: 'Corteiz' },
+  { slug: 'palace', name: 'Palace' },
+  { slug: 'trapstar', name: 'Trapstar' },
+  { slug: 'broken-planet', name: 'Broken Planet' },
+  { slug: 'supreme', name: 'Supreme' },
+  { slug: 'denim-tears', name: 'Denim Tears' },
+  { slug: 'kith', name: 'Kith' },
+  { slug: 'bape', name: 'BAPE' },
+  { slug: 'human-made', name: 'Human Made' },
+  { slug: 'stussy', name: 'Stüssy' },
+  { slug: 'sp5der', name: 'Sp5der' },
+] as const satisfies readonly { slug: string; name: string }[];
 
 export type Brand = (typeof BRANDS)[number];
 export type BrandSlug = Brand['slug'];

@@ -42,11 +42,11 @@ Every customer-facing text lives in **`src/config/copy.json`**: meta titles and 
 
 - Edit a value, save: the dev server reloads. Then run `npm run check`; a missing or renamed key fails the check.
 - Keep the keys, change only the values. Lists (`steps`, `checks`, FAQ `items`, legal `sections`) can grow or shrink.
-- `{placeholders}` are filled in by the code; keep them when rewording: `{total}`, `{available}`, `{city}`, `{brand}`, `{count}`, `{cities}`, `{brands}`, `{item}`, `{sizes}`, `{ref}`, `{n}`, `{whatsapp}`, `{instagram}`, and `{email}` in legal pages (rendered as a link).
-- `\n` inside a title forces a line break (`home.cities.title`, `home.howToBuy.title`).
+- `{placeholders}` are filled in by the code; keep them when rewording: `{total}`, `{available}`, `{city}`, `{brand}`, `{count}`, `{item}`, `{sizes}`, `{ref}`, `{n}`, `{whatsapp}`, `{instagram}`, and `{email}` in legal pages (rendered as a link).
+- `\n` inside a title forces a line break (e.g. `home.howToBuy.title`).
 - Voice: short sentences, voseo, no filler (see `docs/DESIGN.md`, "Voice").
 
-Brand names, cities and the contact numbers are data, not copy: they stay in `src/config/site.ts`.
+Brand names and the contact numbers are data, not copy: they stay in `src/config/site.ts`.
 
 ## Adding a garment
 
@@ -67,7 +67,7 @@ scripts/
   generate-brand-assets.mjs  # favicon.svg/.ico, apple-touch-icon, manifest icons, og-default.png
 src/
   config/pricing.ts       # dollar-rate API URL, timeout, rounding step (no fallback rate)
-  config/site.ts          # brand data, contact, brands + cities, category/status keys, routes
+  config/site.ts          # brand data, contact, brands, category/status keys, routes
   config/copy.json        # every customer-facing text (see "Editing texts")
   content.config.ts       # `products` collection schema (frontmatter validation)
   content/products/       # one .md per garment + img/ (+ _template.md)
@@ -79,7 +79,7 @@ src/
   components/
     ui/                   # Logo (traced paths, currentColor), Star (chrome), Barcode, Icon
     layout/               # Header (sticky, CSS-only mobile menu), Footer
-    home/                 # Hero, BrandStrip, InStock, Cities, HowToBuy, Originals, Faq, FinalCta
+    home/                 # Hero, BrandStrip, InStock, HowToBuy, Originals, Faq, FinalCta
     catalog/              # ProductCard (hang tag), CatalogView (title + brand filter + shelf)
     page/                 # LegalPage (renders pages.privacy / pages.terms from copy.json)
     seo/                  # SEO meta tags, JsonLd

@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import BrandStrip from '../components/home/BrandStrip.astro';
 import InStock from '../components/home/InStock.astro';
-import Cities from '../components/home/Cities.astro';
 import HowToBuy from '../components/home/HowToBuy.astro';
 import Originals from '../components/home/Originals.astro';
 import Faq from '../components/home/Faq.astro';
@@ -25,7 +24,6 @@ const shelf = [...featured, ...topUp].slice(0, FEATURED_MAX);
   <Hero products={products} />
   <BrandStrip />
   <InStock featured={shelf} total={products.length} />
-  <Cities />
   <HowToBuy />
   <Originals />
   <Faq />

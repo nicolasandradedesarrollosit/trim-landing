@@ -26,7 +26,7 @@ Consult these guides before working on related tasks:
 - **Touching the look of the site? Read `docs/DESIGN.md` first** (tokens, type, the hang-tag card, logo usage).
 - Code, comments and docs in English; customer-facing copy and URLs in Spanish (es-AR, voseo).
 - The only conversion paths are WhatsApp and Instagram. There is no cart, checkout or form: do not add one without a decision recorded in `docs/STRATEGY.md`.
-- **All customer-facing text lives in `src/config/copy.json`** (read through `src/lib/copy.ts`: `copy`, `fill()`, `rich()`); never hardcode copy in components. Data (brand, contact channels, brands, cities, category/status keys, routes) lives in `src/config/site.ts`.
+- **All customer-facing text lives in `src/config/copy.json`** (read through `src/lib/copy.ts`: `copy`, `fill()`, `rich()`); never hardcode copy in components. Data (brand, contact channels, brands, category/status keys, routes) lives in `src/config/site.ts`.
 - Voice: one idea per sentence, short, voseo, no filler, no explaining the UI, no selling adjectives. If a sentence can lose words, cut them.
 - Prices are stored in USD (`priceUsd`); peso amounts are computed only in the browser from the live rate. **Never add a fallback, cached or build-time rate**: if the rate is unavailable the site must show the error, not a possibly wrong price. See README "Prices".
 - Catalogue lives in `src/content/products/` (schema in `src/content.config.ts`); the build fails on invalid frontmatter.

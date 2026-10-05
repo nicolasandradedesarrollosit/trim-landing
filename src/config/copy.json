@@ -45,12 +45,6 @@
       "title": "En stock",
       "link": "Ver catálogo ({total})"
     },
-    "cities": {
-      "title": "{cities} ciudades,\n{brands} marcas",
-      "aside": "Cuántas marcas traemos de cada ciudad.",
-      "countLabel": "{count} marcas",
-      "numberWords": ["cero", "una", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce"]
-    },
     "howToBuy": {
       "title": "Cómo\ncomprar",
       "stepLabel": "Paso {n}",
