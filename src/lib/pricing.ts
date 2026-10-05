@@ -1,6 +1,6 @@
 /**
- * USD → ARS pricing. Pure helpers are shared by the build (initial HTML) and the browser
- * script that refreshes prices on every visit (RateNote.astro), so both round the same way.
+ * USD → ARS pricing, used only in the browser (RateNote.astro). There is no fallback:
+ * fetchRate() throws when the live rate is unavailable and callers must show an error.
  */
 import { PRICING } from '../config/pricing';
 
@@ -9,8 +9,6 @@ export interface Rate {
   venta: number;
   /** ISO date of the quote. */
   updatedAt: string;
-  /** False when the API failed and PRICING.fallbackRate was used. */
-  live: boolean;
 }
 
 /** USD price → ARS, rounded up to PRICING.roundTo. */
@@ -30,26 +28,12 @@ const time = new Intl.DateTimeFormat('es-AR', {
 /** "4/10, 17:52" in Buenos Aires time. */
 export const formatRateTime = (iso: string) => time.format(new Date(iso));
 
-/** Reads the quote from PRICING.rateUrl. Throws on network errors or an unexpected payload. */
-export async function fetchRate(timeoutMs = 5000): Promise<Rate> {
-  const res = await fetch(PRICING.rateUrl, { signal: AbortSignal.timeout(timeoutMs) });
+/** Reads the live quote. Throws on network errors, timeouts or an unexpected payload. */
+export async function fetchRate(): Promise<Rate> {
+  const res = await fetch(PRICING.rateUrl, { cache: 'no-store', signal: AbortSignal.timeout(PRICING.timeoutMs) });
   if (!res.ok) throw new Error(`Rate API answered ${res.status}`);
   const data = (await res.json()) as { venta?: unknown; fechaActualizacion?: unknown };
-  if (typeof data.venta !== 'number' || data.venta <= 0) throw new Error('Rate API: missing "venta"');
-  return {
-    venta: data.venta,
-    updatedAt: typeof data.fechaActualizacion === 'string' ? data.fechaActualizacion : new Date().toISOString(),
-    live: true,
-  };
-}
-
-let buildRate: Promise<Rate> | undefined;
-
-/** The rate used for the static HTML: fetched once per build, falling back to PRICING.fallbackRate. */
-export function getBuildRate(): Promise<Rate> {
-  buildRate ??= fetchRate().catch((error: unknown) => {
-    console.warn(`[pricing] ${String(error)}; using fallback rate ${PRICING.fallbackRate}`);
-    return { venta: PRICING.fallbackRate, updatedAt: new Date().toISOString(), live: false };
-  });
-  return buildRate;
+  if (typeof data.venta !== 'number' || !(data.venta > 0)) throw new Error('Rate API: missing "venta"');
+  if (typeof data.fechaActualizacion !== 'string') throw new Error('Rate API: missing "fechaActualizacion"');
+  return { venta: data.venta, updatedAt: data.fechaActualizacion };
 }

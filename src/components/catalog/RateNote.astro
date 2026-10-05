@@ -1,46 +1,64 @@
 ---
 /**
- * The dollar rate behind the ARS prices, e.g. "Dólar blue venta $ 1.560 · 4/10, 17:52".
- * Rendered with the build-time rate; its script then fetches the live rate in the browser
- * and recalculates every [data-usd] price on the page. If the API fails, the build-time
- * prices stay. Include it on every page that shows ProductCards.
+ * Live dollar rate + ARS prices. The HTML ships with no peso amounts: this component's
+ * script fetches the rate on every visit and fills in every [data-usd] price. If the rate
+ * cannot be read there is no fallback: the note and every price show an error, so no one
+ * sees (or asks to buy at) a peso amount that may be wrong. Include it on every page that
+ * shows ProductCards. Texts: `pricing` in copy.json.
  */
-import { copy, fill } from '../../lib/copy';
-import { formatArs, formatRateTime, getBuildRate } from '../../lib/pricing';
+import { copy } from '../../lib/copy';
 
 interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
-const rate = await getBuildRate();
+const t = copy.pricing;
 ---
 
-<p class:list={['label', className]} data-rate data-template={copy.pricing.rate}>
-  <span data-rate-label>{fill(copy.pricing.rate, { rate: formatArs(rate.venta) })}</span>{' · '}<time data-rate-time datetime={rate.updatedAt}>{rate.live ? formatRateTime(rate.updatedAt) : copy.pricing.fallback}</time>
+<p
+  class:list={['label data-[state=error]:font-bold data-[state=error]:text-ink', className]}
+  data-rate
+  data-state="loading"
+  data-template={t.rate}
+  data-error={t.error}
+  data-unavailable={t.unavailable}
+  aria-live="polite"
+>
+  {t.loading}
 </p>
+<noscript><p class:list={['label font-bold', className]}>{t.noscript}</p></noscript>
 
 <script>
   import { fetchRate, formatArs, formatRateTime, toArs } from '../../lib/pricing';
 
-  async function refreshPrices() {
+  const notes = document.querySelectorAll<HTMLElement>('[data-rate]');
+  const prices = document.querySelectorAll<HTMLElement>('[data-usd]');
+  const first = notes[0]?.dataset;
+
+  async function fillPrices() {
     try {
-      const rate = await fetchRate(8000);
-      document.querySelectorAll<HTMLElement>('[data-usd]').forEach((el) => {
+      const rate = await fetchRate();
+      prices.forEach((el) => {
         el.textContent = formatArs(toArs(Number(el.dataset.usd), rate.venta));
       });
-      document.querySelectorAll<HTMLElement>('[data-rate]').forEach((el) => {
-        const label = el.querySelector('[data-rate-label]');
-        if (label) label.textContent = (el.dataset.template ?? '').replace('{rate}', formatArs(rate.venta));
-        const time = el.querySelector('time[data-rate-time]');
-        if (time) {
-          time.textContent = formatRateTime(rate.updatedAt);
-          time.setAttribute('datetime', rate.updatedAt);
-        }
+      notes.forEach((el) => {
+        el.textContent = (el.dataset.template ?? '')
+          .replace('{rate}', formatArs(rate.venta))
+          .replace('{time}', formatRateTime(rate.updatedAt));
+        el.dataset.state = 'ready';
       });
     } catch {
-      // Keep the prices rendered at build time.
+      // No fallback on purpose: a stale or guessed rate would show a wrong price.
+      prices.forEach((el) => {
+        el.textContent = first?.unavailable ?? '';
+        el.dataset.state = 'error';
+      });
+      notes.forEach((el) => {
+        el.textContent = el.dataset.error ?? '';
+        el.dataset.state = 'error';
+      });
     }
   }
 
-  refreshPrices();
+  fillPrices();
 </script>

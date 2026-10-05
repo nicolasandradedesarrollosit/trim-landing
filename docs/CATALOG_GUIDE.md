@@ -21,7 +21,7 @@ Every garment is one Markdown file in `src/content/products/`. The frontmatter i
 | `sizes` | yes | Sizes in stock as on the label: `[S, M]`, `[42]`, `[Único]`. |
 | `condition` | no | `nuevo` (default, new with tags) or `como-nuevo` (used, no visible wear). |
 | `status` | no | `disponible` (default), `reservado` (deposit paid) or `vendido`. |
-| `priceUsd` | no | Price in **USD** (`185`). The site shows it in ARS at the live dollar blue rate, rounded up to $1.000, plus "USD 185" below. Leave it out to show "A consultar". |
+| `priceUsd` | no | Price in **USD** (`185`). The site shows it in ARS at the live dollar blue rate (rounded up to $1.000) plus "USD 185" below; if the rate is unavailable it shows "Sin cotización" instead of a peso amount. Leave it out to show "A consultar". |
 | `image` | yes | Relative path to the photo (`./img/…`). |
 | `imageAlt` | yes | One sentence describing the photo, for screen readers. |
 | `illustrative` | no | `true` while the photo is not the actual garment: the card shows "Foto ilustrativa". |

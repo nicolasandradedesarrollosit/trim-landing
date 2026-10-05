@@ -66,7 +66,7 @@ scripts/
   trace-logos.mjs         # PNG -> SVG (potrace) into public/brand/ and src/components/ui/paths/
   generate-brand-assets.mjs  # favicon.svg/.ico, apple-touch-icon, manifest icons, og-default.png
 src/
-  config/pricing.ts       # dollar-rate API URL, fallback rate, rounding step
+  config/pricing.ts       # dollar-rate API URL, timeout, rounding step (no fallback rate)
   config/site.ts          # brand data, contact, brands + cities, category/status keys, routes
   config/copy.json        # every customer-facing text (see "Editing texts")
   content.config.ts       # `products` collection schema (frontmatter validation)
@@ -85,7 +85,7 @@ src/
     seo/                  # SEO meta tags, JsonLd
   lib/
     content.ts            # getProducts, brandsInStock, URL builders, refCode
-    pricing.ts            # USD -> ARS: fetchRate, getBuildRate (memoized, with fallback), toArs, formatArs
+    pricing.ts            # USD -> ARS (browser only): fetchRate, toArs, formatArs, formatRateTime
     contact.ts            # whatsappUrl, productMessage, instagramUrl
     copy.ts               # typed `copy` import, fill() for {placeholders}, rich() for legal bodies
     seo.ts                # absUrl, ClothingStore/WebSite/FAQPage/CollectionPage/Breadcrumb JSON-LD, graph()
@@ -102,16 +102,16 @@ public/brand/             # traced logos (+ white variants), star mark, app icon
 
 **Catalogue**: products are a content collection validated at build time. Sold garments sink to the end of the shelf, reserved ones show a flag. Each garment gets a short stable reference (`TRM-XXXX`, `refCode()` in `lib/content.ts`) printed on its tag and included in its WhatsApp message, and an anchor (`/catalogo/#<id>`).
 
-**SEO**: each page has its own title, description, canonical and OG image; JSON-LD is a single `@graph` with `ClothingStore` + `WebSite`, plus `FAQPage` on the home page and `CollectionPage`/`ItemList` + `BreadcrumbList` on catalogue pages. Brand pages with fewer than 3 garments are `noindex` and left out of the sitemap. `/llms.txt` gives AI assistants a Markdown map with the current stock. CSS is inlined. The only client-side JavaScript is the small inline price refresher on pages with garments (see "Prices"); the mobile menu and the FAQ are `<details>` elements and the marquee is pure CSS.
+**SEO**: each page has its own title, description, canonical and OG image; JSON-LD is a single `@graph` with `ClothingStore` + `WebSite`, plus `FAQPage` on the home page and `CollectionPage`/`ItemList` + `BreadcrumbList` on catalogue pages. Brand pages with fewer than 3 garments are `noindex` and left out of the sitemap. `/llms.txt` gives AI assistants a Markdown map with the current stock. CSS is inlined. The only client-side JavaScript is the small inline script that fills in peso prices on pages with garments (see "Prices"); the mobile menu and the FAQ are `<details>` elements and the marquee is pure CSS.
 
 ## Prices
 
 Garments are priced in **USD** (`priceUsd` in each product file) and shown in **ARS** at the dollar blue "venta" rate:
 
 - Source: [DolarAPI](https://dolarapi.com) `/v1/dolares/blue` — public, free, no key, CORS enabled. There is no public API for the Rosario blue rate (infodolar has none, and the old Rosario endpoints of other projects are offline); the national blue tracks it within a few pesos.
-- **Build time**: `getBuildRate()` fetches the rate once and renders the ARS prices into the HTML, so prices work without JavaScript and search engines see them. If the API is down, `PRICING.fallbackRate` is used and the note says "referencia".
-- **In the browser**: `RateNote.astro` (shown above every shelf as "Dólar blue venta $ 1.560 · 4/10, 17:52") fetches the live rate on every visit and recalculates every `[data-usd]` price. If that request fails, the build-time prices stay.
-- Rounding: up to the next `PRICING.roundTo` ($1.000 by default). Change URL, fallback and rounding in `src/config/pricing.ts`; the label texts are under `pricing` and `product.priceUsd` in `copy.json`.
+- **Live only, no fallback.** The HTML ships with no peso amounts (`…` placeholders). `RateNote.astro` (shown above every shelf) fetches the rate in the browser on every visit and fills in every `[data-usd]` price, then shows "Dólar blue venta $ 1.560 · 4/10, 17:52".
+- **If the rate cannot be read** (API down, timeout after `PRICING.timeoutMs`, HTTP error, unexpected payload), every price shows "Sin cotización" and the note says "Sin cotización del dólar. Probá en un rato." There is deliberately no fallback rate and no build-time peso price: a stale or guessed rate would show a wrong amount when someone asks to buy. Without JavaScript, a `<noscript>` note explains that peso prices need it. The USD price is always shown.
+- Rounding: up to the next `PRICING.roundTo` ($1.000 by default). Change URL, timeout and rounding in `src/config/pricing.ts`; the texts (loading, rate, error) are under `pricing` and `product.priceUsd` in `copy.json`.
 
 ## Operations
 

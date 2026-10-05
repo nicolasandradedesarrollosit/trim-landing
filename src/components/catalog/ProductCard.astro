@@ -11,7 +11,6 @@ import { categoryName } from '../../config/site';
 import { whatsappUrl, productItem, productMessage } from '../../lib/contact';
 import { copy, fill } from '../../lib/copy';
 import { brandOf, refCode, type Product } from '../../lib/content';
-import { formatArs, getBuildRate, toArs } from '../../lib/pricing';
 
 interface Props {
   product: Product;
@@ -23,8 +22,8 @@ interface Props {
 const { product, as: Heading = 'h3', eager = false } = Astro.props;
 const { data } = product;
 const brand = brandOf(product);
-const rate = await getBuildRate();
-// ARS at the build-time rate; RateNote's script refreshes [data-usd] with the live rate.
+// The ARS amount is filled in by RateNote's script with the live rate; there is no
+// build-time peso price, so a failed rate never shows a wrong amount.
 const usd = data.priceUsd;
 const sold = data.status === 'vendido';
 const titleId = `${product.id}-title`;
@@ -82,8 +81,8 @@ const t = copy.product;
         {
           usd ? (
             <>
-              <span class="tag__price" data-usd={usd}>
-                {formatArs(toArs(usd, rate.venta))}
+              <span class="tag__price data-[state=error]:text-xs" data-usd={usd}>
+                {copy.pricing.pending}
               </span>
               <span class="font-mono text-[0.625rem] tracking-[0.08em] text-steel">{fill(t.priceUsd, { usd })}</span>
             </>

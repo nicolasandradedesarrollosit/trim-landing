@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { BRANDS, SITE } from '../config/site';
 import { instagramUrl, whatsappUrl } from '../lib/contact';
 import { brandOf, brandUrl, brandsInStock, catalogUrl, getProducts } from '../lib/content';
-import { formatArs, getBuildRate, toArs } from '../lib/pricing';
 import { copy, fill } from '../lib/copy';
 import { absUrl } from '../lib/seo';
 
@@ -14,7 +13,6 @@ export const GET: APIRoute = async () => {
   const t = copy.llms;
   const p = copy.product;
   const products = await getProducts();
-  const rate = await getBuildRate();
   const stock = products
     .filter((item) => item.data.status !== 'vendido')
     .map((item) => {
@@ -23,7 +21,7 @@ export const GET: APIRoute = async () => {
         `${p.sizes}: ${sizes.join(', ')}`,
         p.conditions[condition],
         p.statuses[status],
-        priceUsd ? `${formatArs(toArs(priceUsd, rate.venta))} (${fill(p.priceUsd, { usd: priceUsd })})` : p.priceOnRequest,
+        priceUsd ? fill(p.priceUsd, { usd: priceUsd }) : p.priceOnRequest,
       ];
       return `- [${brandOf(item).name} ${name}](${absUrl(`${catalogUrl}#${item.id}`)}): ${bits.join('; ')}`;
     });
@@ -46,8 +44,6 @@ ${brandsInStock(products)
   .join('\n')}
 
 ## ${t.stock}
-
-${fill(copy.pricing.rate, { rate: formatArs(rate.venta) })}.
 
 ${stock.join('\n')}
 
