@@ -1,14 +1,12 @@
 /**
- * Central site configuration. Brand, contact channels, brands, categories and FAQ live
- * here: components and pages read from this file and never hardcode them.
- * User-facing strings are Spanish (es-AR); identifiers are English.
+ * Central site configuration: brand data, contact channels, brands, cities, categories
+ * and routes. Customer-facing text does NOT live here: it is in ./copy.json (read through
+ * src/lib/copy.ts). Identifiers are English.
  */
+import copy from './copy.json';
 
 export const SITE = {
   name: 'TRIM',
-  tagline: 'Hyper-brands originales en Argentina.',
-  description:
-    'Corteiz, Supreme, Stüssy, BAPE y más: ropa original de hyper-brands en Argentina. Mirá el catálogo y consultá talle y precio por WhatsApp.',
   // TODO: set the production domain before launch. Every canonical, sitemap and OG URL derives from it.
   url: 'https://www.trim.com.ar',
   locale: 'es-AR',
@@ -22,9 +20,6 @@ export const SITE = {
   foundingDate: '2026',
   // TODO: generic mailbox on the site's own domain.
   email: 'hola@trim.com.ar',
-  /** Shown in the footer: TRIM resells, it is not affiliated with the brands it carries. */
-  disclaimer:
-    'TRIM es un revendedor independiente. No está afiliado ni asociado a las marcas que comercializa; los nombres y marcas pertenecen a sus respectivos dueños.',
 } as const;
 
 /**
@@ -36,8 +31,6 @@ export const CONTACT = {
   instagram: 'trim.ar',
   // TODO: real WhatsApp Business number.
   whatsapp: '5491100000000',
-  /** Prefilled message for the generic "Escribinos" buttons. */
-  greeting: 'Hola TRIM! Quiero hacer una consulta.',
 } as const;
 
 /** Cities the brands come from (the stair-step block on the home page). */
@@ -69,91 +62,26 @@ export type BrandSlug = Brand['slug'];
 export const BRAND_SLUGS = BRANDS.map((b) => b.slug) as [BrandSlug, ...BrandSlug[]];
 export const getBrand = (slug: string): Brand | undefined => BRANDS.find((b) => b.slug === slug);
 
-export const CATEGORIES = [
-  { slug: 'buzos', name: 'Buzos' },
-  { slug: 'remeras', name: 'Remeras' },
-  { slug: 'camperas', name: 'Camperas' },
-  { slug: 'pantalones', name: 'Pantalones' },
-  { slug: 'accesorios', name: 'Accesorios' },
-] as const;
-export type CategorySlug = (typeof CATEGORIES)[number]['slug'];
-export const CATEGORY_SLUGS = CATEGORIES.map((c) => c.slug) as [CategorySlug, ...CategorySlug[]];
-export const getCategory = (slug: string) => CATEGORIES.find((c) => c.slug === slug);
+/** Category slugs; their display names are in copy.json (`categories`). */
+export type CategorySlug = keyof typeof copy.categories;
+export const CATEGORY_SLUGS = Object.keys(copy.categories) as [CategorySlug, ...CategorySlug[]];
+export const categoryName = (slug: CategorySlug) => copy.categories[slug];
 
-export const CONDITION_LABEL = {
-  nuevo: 'Nuevo con etiqueta',
-  'como-nuevo': 'Usado, como nuevo',
-} as const;
-export type Condition = keyof typeof CONDITION_LABEL;
+/** Condition and status keys; their labels are in copy.json (`product.conditions` / `product.statuses`). */
+export type Condition = keyof typeof copy.product.conditions;
+export const CONDITIONS = Object.keys(copy.product.conditions) as [Condition, ...Condition[]];
+export type Status = keyof typeof copy.product.statuses;
+export const STATUSES = Object.keys(copy.product.statuses) as [Status, ...Status[]];
 
-export const STATUS_LABEL = {
-  disponible: 'Disponible',
-  reservado: 'Reservado',
-  vendido: 'Vendido',
-} as const;
-export type Status = keyof typeof STATUS_LABEL;
-
-/** In-page anchors of the home page, used by the header and the hero index. */
+/** Header links. Labels come from copy.json (`nav`). */
 export const NAV = [
-  { href: '/catalogo/', label: 'Catálogo' },
-  { href: '/#como-comprar', label: 'Cómo comprar' },
-  { href: '/#originales', label: 'Originales' },
-  { href: '/#preguntas', label: 'Preguntas' },
+  { href: '/catalogo/', label: copy.nav.catalog },
+  { href: '/#como-comprar', label: copy.nav.howToBuy },
+  { href: '/#originales', label: copy.nav.originals },
+  { href: '/#preguntas', label: copy.nav.faq },
 ] as const;
 
 export const LEGAL_NAV = [
-  { href: '/privacidad/', label: 'Privacidad' },
-  { href: '/terminos/', label: 'Términos' },
-] as const;
-
-/**
- * Buying steps (home "Cómo comprar"). They are a real sequence, hence numbered.
- * TODO: confirm payment and shipping options with the business before launch.
- */
-export const STEPS = [
-  {
-    title: 'Elegís',
-    body: 'Mirá el catálogo. Cada prenda muestra marca, talles y si está disponible.',
-  },
-  {
-    title: 'Consultás',
-    body: 'Tocá “Consultar” y se abre WhatsApp con la prenda ya escrita. Te confirmamos talle y precio.',
-  },
-  {
-    title: 'Te llega',
-    body: 'Pagás por transferencia o en efectivo y coordinamos el envío a todo el país, o la entrega en CABA.',
-  },
-] as const;
-
-/** Home FAQ (also emitted as FAQPage JSON-LD). TODO: confirm every answer with the business. */
-export const FAQ = [
-  {
-    question: '¿Las prendas son originales?',
-    answer:
-      'Sí. Todo se compra en tiendas oficiales o en los drops de cada marca, y te mostramos el comprobante de compra si lo pedís. Si no podemos comprobar que algo es original, no entra al catálogo.',
-  },
-  {
-    question: '¿Cómo compro?',
-    answer:
-      'Tocá “Consultar” en la prenda que te guste: se abre WhatsApp con el mensaje armado. Te confirmamos talle, stock y precio, y coordinamos pago y envío por ahí mismo.',
-  },
-  {
-    question: '¿Hacen envíos?',
-    answer:
-      'Sí, a todo el país. En CABA también coordinamos entregas en mano. El costo y el plazo dependen del destino; te los pasamos cuando consultás.',
-  },
-  {
-    question: '¿Cómo puedo pagar?',
-    answer: 'Por transferencia bancaria o en efectivo en entregas en mano. Te pasamos los datos por WhatsApp.',
-  },
-  {
-    question: 'No encuentro lo que busco, ¿lo pueden conseguir?',
-    answer:
-      'Escribinos con la marca, la prenda y tu talle. Si entra en un próximo drop o la podemos conseguir, te avisamos con precio y fecha estimada.',
-  },
-  {
-    question: '¿Qué significa “Usado, como nuevo”?',
-    answer:
-      'Que la prenda tuvo un dueño anterior pero no tiene marcas, manchas ni desgaste visible. Siempre te mandamos fotos reales antes de que pagues.',
-  },
+  { href: '/privacidad/', label: copy.nav.privacy },
+  { href: '/terminos/', label: copy.nav.terms },
 ] as const;

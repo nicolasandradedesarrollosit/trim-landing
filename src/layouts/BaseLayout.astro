@@ -8,6 +8,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { SITE } from '../config/site';
 import { graph } from '../lib/seo';
+import { copy } from '../lib/copy';
 
 interface Props {
   seo: SeoProps;
@@ -36,7 +37,7 @@ const { seo, jsonLd = [] } = Astro.props;
     <JsonLd data={graph(...jsonLd)} />
   </head>
   <body>
-    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <a class="skip-link" href="#main">{copy.site.skipLink}</a>
     <Header />
     <main id="main">
       <slot />

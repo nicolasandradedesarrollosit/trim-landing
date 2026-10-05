@@ -5,6 +5,9 @@ import Star from '../ui/Star.astro';
 import Icon from '../ui/Icon.astro';
 import photo from '../../assets/photos/puffers-walking.jpg';
 import { instagramHandle, instagramUrl, whatsappUrl } from '../../lib/contact';
+import { copy } from '../../lib/copy';
+
+const t = copy.home.finalCta;
 ---
 
 <section class="relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="cta-title">
@@ -17,14 +20,14 @@ import { instagramHandle, instagramUrl, whatsappUrl } from '../../lib/contact';
     class="photo-mono absolute inset-0 -z-10 size-full object-cover opacity-35"
   />
   <div class="wrap grid gap-10 py-[var(--space-section)]">
-    <p class="label text-fog">¿Buscás algo que no está en el catálogo? También lo conseguimos.</p>
-    <h2 id="cta-title" class="display relative text-mega leading-[0.8]">
-      Escri&shy;binos
+    <p class="label text-fog">{t.label}</p>
+    <h2 id="cta-title" class="display relative text-mega leading-[0.8]" style="hyphens: auto">
+      {t.title}
       <Star class="absolute top-[-0.15em] right-0 w-[0.5em] max-md:hidden" orbit spin />
     </h2>
     <div class="grid gap-3 sm:grid-cols-2 md:max-w-3xl">
       <a href={whatsappUrl()} class="btn btn--light justify-between py-5 text-sm" rel="noopener" target="_blank">
-        <span class="flex items-center gap-2.5"><Icon name="whatsapp" /> WhatsApp</span>
+        <span class="flex items-center gap-2.5"><Icon name="whatsapp" /> {copy.nav.whatsapp}</span>
         <Icon name="arrow" />
       </a>
       <a href={instagramUrl} class="btn btn--light-ghost justify-between py-5 text-sm" rel="noopener" target="_blank">
@@ -32,6 +35,6 @@ import { instagramHandle, instagramUrl, whatsappUrl } from '../../lib/contact';
         <Icon name="arrow" />
       </a>
     </div>
-    <p class="label text-fog">Foto de fondo: F aint / Unsplash</p>
+    <p class="label text-fog">{copy.photos.finalCta.credit}</p>
   </div>
 </section>

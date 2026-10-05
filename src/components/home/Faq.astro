@@ -1,14 +1,21 @@
 ---
-/** Questions from site.ts. The page emits the matching FAQPage JSON-LD (lib/seo.ts faqLd). */
-import { FAQ } from '../../config/site';
+/** Questions from copy.json (`home.faq`). The page emits the matching FAQPage JSON-LD (lib/seo.ts faqLd). */
+import { copy } from '../../lib/copy';
+
+const t = copy.home.faq;
 ---
 
 <section id="preguntas" class="wrap section" aria-labelledby="faq-title">
   <div class="grid gap-x-[var(--col-gap)] gap-y-8 lg:grid-cols-12">
-    <h2 id="faq-title" class="display text-giant lg:text-[clamp(3.5rem,5.6vw,6rem)] lg:sticky lg:top-24 lg:col-span-4 lg:self-start">Preguntas</h2>
+    <h2
+      id="faq-title"
+      class="display text-giant lg:sticky lg:top-24 lg:col-span-4 lg:self-start lg:text-[clamp(3.5rem,5.6vw,6rem)]"
+    >
+      {t.title}
+    </h2>
     <div class="border-b border-ink lg:col-span-8">
       {
-        FAQ.map((item, i) => (
+        t.items.map((item, i) => (
           <details class="faq" open={i === 0}>
             <summary>{item.question}</summary>
             <p class="faq__answer">{item.answer}</p>

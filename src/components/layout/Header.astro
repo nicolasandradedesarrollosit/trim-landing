@@ -1,19 +1,20 @@
 ---
 import Logo from '../ui/Logo.astro';
 import Icon from '../ui/Icon.astro';
-import { NAV, SITE } from '../../config/site';
+import { NAV } from '../../config/site';
 import { instagramHandle, instagramUrl, whatsappUrl } from '../../lib/contact';
+import { copy } from '../../lib/copy';
 
 const path = Astro.url.pathname;
 ---
 
 <header class="sticky top-0 z-40 border-b border-ink bg-paper/95 backdrop-blur-sm">
   <div class="wrap flex h-14 items-center justify-between gap-6">
-    <a href="/" class="text-ink" aria-label={`${SITE.name}, ir al inicio`}>
+    <a href="/" class="text-ink" aria-label={copy.site.homeLabel}>
       <Logo variant="wordmark" class="w-[5.5rem]" label="" />
     </a>
 
-    <nav aria-label="Principal" class="hidden md:block">
+    <nav aria-label={copy.nav.main} class="hidden md:block">
       <ul role="list" class="flex gap-7">
         {
           NAV.map((l) => (
@@ -35,20 +36,20 @@ const path = Astro.url.pathname;
       <a href={instagramUrl} class="btn btn--ghost hidden px-3 py-2 sm:inline-flex" rel="noopener" target="_blank">
         <Icon name="instagram" />
         <span class="hidden lg:inline">{instagramHandle}</span>
-        <span class="sr-only">en Instagram (se abre en otra pestaña)</span>
+        <span class="sr-only">{copy.nav.instagram} ({copy.site.newTab})</span>
       </a>
       <a href={whatsappUrl()} class="btn px-3 py-2" rel="noopener" target="_blank">
         <Icon name="whatsapp" />
-        <span>WhatsApp</span>
+        <span>{copy.nav.whatsapp}</span>
       </a>
 
       <!-- Phones: CSS-only menu, no client JS. -->
       <details class="group relative md:hidden">
         <summary class="btn btn--ghost list-none px-3 py-2 [&::-webkit-details-marker]:hidden">
-          <span class="group-open:hidden">Menú</span><span class="hidden group-open:inline">Cerrar</span>
+          <span class="group-open:hidden">{copy.nav.menu}</span><span class="hidden group-open:inline">{copy.nav.close}</span>
         </summary>
         <nav
-          aria-label="Principal (móvil)"
+          aria-label={copy.nav.main}
           class="absolute top-[calc(100%+0.6rem)] right-0 w-64 border border-ink bg-paper p-5 shadow-[6px_6px_0_var(--color-ink)]"
         >
           <ul role="list" class="grid gap-4">
@@ -63,7 +64,7 @@ const path = Astro.url.pathname;
             }
             <li class="border-t border-rule pt-4">
               <a href={instagramUrl} class="label link" rel="noopener" target="_blank">
-                Instagram {instagramHandle}
+                {copy.nav.instagram} {instagramHandle}
               </a>
             </li>
           </ul>

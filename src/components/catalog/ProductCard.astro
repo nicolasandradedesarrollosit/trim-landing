@@ -7,8 +7,9 @@
 import { Image } from 'astro:assets';
 import Barcode from '../ui/Barcode.astro';
 import Icon from '../ui/Icon.astro';
-import { CONDITION_LABEL, STATUS_LABEL, getCategory } from '../../config/site';
-import { whatsappUrl, productMessage } from '../../lib/contact';
+import { categoryName } from '../../config/site';
+import { whatsappUrl, productItem, productMessage } from '../../lib/contact';
+import { copy, fill } from '../../lib/copy';
 import { brandOf, formatPrice, refCode, type Product } from '../../lib/content';
 
 interface Props {
@@ -24,6 +25,7 @@ const brand = brandOf(product);
 const price = formatPrice(data.price);
 const sold = data.status === 'vendido';
 const titleId = `${product.id}-title`;
+const t = copy.product;
 ---
 
 <article id={product.id} class:list={['tag', { 'tag--sold': sold }]} aria-labelledby={titleId}>
@@ -36,23 +38,23 @@ const titleId = `${product.id}-title`;
       sizes="(min-width: 80rem) 22vw, (min-width: 64rem) 30vw, (min-width: 30rem) 46vw, 92vw"
       loading={eager ? 'eager' : 'lazy'}
     />
-    {data.status !== 'disponible' && <span class="tag__flag">{STATUS_LABEL[data.status]}</span>}
-    {data.illustrative && <span class="tag__note">Foto ilustrativa</span>}
+    {data.status !== 'disponible' && <span class="tag__flag">{t.statuses[data.status]}</span>}
+    {data.illustrative && <span class="tag__note">{t.illustrative}</span>}
   </div>
 
   <div class="tag__body">
-    <p class="tag__brand">{brand.name} · {getCategory(data.category)?.name}</p>
+    <p class="tag__brand">{brand.name} · {categoryName(data.category)}</p>
     <Heading id={titleId} class="tag__name">{data.name}</Heading>
 
     <dl class="tag__specs">
-      <dt>Talles</dt>
+      <dt>{t.sizes}</dt>
       <dd>{data.sizes.join(' · ')}</dd>
-      <dt>Estado</dt>
-      <dd>{CONDITION_LABEL[data.condition]}</dd>
+      <dt>{t.condition}</dt>
+      <dd>{t.conditions[data.condition]}</dd>
       {
         data.color && (
           <>
-            <dt>Color</dt>
+            <dt>{t.color}</dt>
             <dd>{data.color}</dd>
           </>
         )
@@ -60,7 +62,7 @@ const titleId = `${product.id}-title`;
       {
         data.season && (
           <>
-            <dt>Temp.</dt>
+            <dt>{t.season}</dt>
             <dd>{data.season}</dd>
           </>
         )
@@ -73,20 +75,20 @@ const titleId = `${product.id}-title`;
         <span class="font-mono text-[0.625rem] tracking-[0.12em] text-steel">{refCode(product)}</span>
       </div>
       <p class="grid justify-items-end gap-0.5">
-        <span class="label text-steel">Precio</span>
-        <span class="tag__price">{price ?? 'A consultar'}</span>
+        <span class="label text-steel">{t.price}</span>
+        <span class="tag__price">{price ?? t.priceOnRequest}</span>
       </p>
     </div>
 
     {
       sold ? (
-        <p class="btn btn--ghost pointer-events-none opacity-60">Vendido</p>
+        <p class="btn btn--ghost pointer-events-none opacity-60">{t.sold}</p>
       ) : (
         <a class="btn" href={whatsappUrl(productMessage(product))} rel="noopener" target="_blank">
           <Icon name="whatsapp" />
-          Consultar
+          {t.consult}
           <span class="sr-only">
-            {brand.name} {data.name} por WhatsApp (se abre en otra pestaña)
+            {fill(t.consultLabel, { item: productItem(product) })} ({copy.site.newTab})
           </span>
         </a>
       )

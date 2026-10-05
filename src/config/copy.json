@@ -1,0 +1,235 @@
+{
+  "site": {
+    "tagline": "Hyper-brands originales.",
+    "description": "Corteiz, Supreme, Stüssy, BAPE y más. Originales, en Argentina. Consultá por WhatsApp.",
+    "seoTitleHome": "TRIM: hyper-brands originales en Argentina",
+    "disclaimer": "TRIM es un revendedor independiente, sin relación con las marcas que vende.",
+    "whatsappGreeting": "Hola TRIM! Quiero hacer una consulta.",
+    "skipLink": "Saltar al contenido",
+    "homeLabel": "TRIM, ir al inicio",
+    "newTab": "se abre en otra pestaña"
+  },
+  "nav": {
+    "catalog": "Catálogo",
+    "howToBuy": "Cómo comprar",
+    "originals": "Originales",
+    "faq": "Preguntas",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "main": "Principal",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram"
+  },
+  "footer": {
+    "colTrim": "TRIM",
+    "colBrands": "Marcas en stock",
+    "colContact": "Contacto",
+    "colLegal": "Legales",
+    "location": "{city}, Argentina"
+  },
+  "home": {
+    "hero": {
+      "labels": ["TRIM®", "Hyper-brands originales", "{city}, AR", "{available} prendas disponibles"],
+      "headline": "Corteiz, Supreme, Stüssy y más. Originales, acá.",
+      "body": "Comprado en tienda oficial o en drop. Lo cerramos por WhatsApp.",
+      "ctaCatalog": "Ver catálogo",
+      "ctaWhatsapp": "Escribinos",
+      "brandsTitle": "Marcas en stock"
+    },
+    "brandStrip": {
+      "label": "Marcas que trabajamos"
+    },
+    "inStock": {
+      "title": "En stock",
+      "link": "Ver catálogo ({total})"
+    },
+    "cities": {
+      "title": "{cities} ciudades,\n{brands} marcas",
+      "aside": "Cuántas marcas traemos de cada ciudad.",
+      "countLabel": "{count} marcas",
+      "numberWords": ["cero", "una", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce"]
+    },
+    "howToBuy": {
+      "title": "Cómo\ncomprar",
+      "stepLabel": "Paso {n}",
+      "steps": [
+        { "title": "Elegís", "body": "Mirá el catálogo." },
+        { "title": "Consultás", "body": "Tocá “Consultar” y escribinos." },
+        { "title": "Te llega", "body": "Envío a todo el país o entrega en CABA." }
+      ]
+    },
+    "originals": {
+      "title": "Si no es original, no entra.",
+      "sticker": "100% original",
+      "stickerSub": "Verificado por TRIM",
+      "tagTitle": "Control de autenticidad",
+      "tagFoot": "TRIM® · Buenos Aires",
+      "checks": [
+        { "title": "Comprobante", "body": "Tienda oficial, web de la marca o drop." },
+        { "title": "Etiquetas", "body": "Revisamos tags, costuras y códigos." },
+        { "title": "Fotos reales", "body": "De la prenda que te llevás." },
+        { "title": "Si hay dudas", "body": "No se publica." }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas",
+      "items": [
+        { "question": "¿Son originales?", "answer": "Sí. Tienda oficial o drop. Si querés, te mostramos el comprobante." },
+        { "question": "¿Cómo compro?", "answer": "Tocá “Consultar” y seguimos por WhatsApp." },
+        { "question": "¿Hacen envíos?", "answer": "A todo el país. En CABA, también en mano." },
+        { "question": "¿Cómo pago?", "answer": "Transferencia o efectivo." },
+        { "question": "¿Consiguen otras prendas?", "answer": "Pasanos marca, prenda y talle." },
+        { "question": "¿Qué es “como nuevo”?", "answer": "Usado, sin marcas ni desgaste. Te mandamos fotos antes de pagar." }
+      ]
+    },
+    "finalCta": {
+      "label": "¿No está en el catálogo? Lo buscamos.",
+      "title": "Escribinos"
+    }
+  },
+  "catalog": {
+    "label": "Catálogo",
+    "seoTitle": "Catálogo de hyper-brands originales",
+    "description": "Buzos, remeras y más de Corteiz, Supreme, Stüssy y otras marcas. Originales. Consultá talle y precio por WhatsApp.",
+    "title": "Catálogo",
+    "intro": "Lo que hay ahora. Tocá “Consultar” en cualquier prenda.",
+    "count": "{total} prendas · {available} disponibles",
+    "filterLabel": "Filtrar por marca",
+    "filterAll": "Todas",
+    "listLabel": "Prendas",
+    "brandSeoTitle": "{brand} original",
+    "brandListName": "{brand} en TRIM",
+    "brandDescription": "{brand} original en Argentina. {count} en el catálogo de TRIM. Consultá por WhatsApp.",
+    "brandIntro": "Lo que hay de {brand}. ¿Buscás otra? Escribinos.",
+    "one": "1 prenda",
+    "many": "{count} prendas"
+  },
+  "product": {
+    "sizes": "Talles",
+    "condition": "Estado",
+    "color": "Color",
+    "season": "Temp.",
+    "price": "Precio",
+    "priceOnRequest": "A consultar",
+    "consult": "Consultar",
+    "consultLabel": "{item} por WhatsApp",
+    "sold": "Vendido",
+    "illustrative": "Foto ilustrativa",
+    "message": "Hola TRIM! Quiero consultar por {item}. Talles: {sizes}. Ref: {ref}",
+    "conditions": {
+      "nuevo": "Nuevo con etiqueta",
+      "como-nuevo": "Usado, como nuevo"
+    },
+    "statuses": {
+      "disponible": "Disponible",
+      "reservado": "Reservado",
+      "vendido": "Vendido"
+    }
+  },
+  "categories": {
+    "buzos": "Buzos",
+    "remeras": "Remeras",
+    "camperas": "Camperas",
+    "pantalones": "Pantalones",
+    "accesorios": "Accesorios"
+  },
+  "photos": {
+    "hero": {
+      "alt": "Persona con buzo y pantalón negros sobre una roca frente al mar, en blanco y negro.",
+      "credit": "Foto: Icee Dc / Unsplash"
+    },
+    "howToBuy": {
+      "alt": "Persona con buzo gris en una esquina de la ciudad, entre vapor.",
+      "credit": "Foto: Caleb / Unsplash"
+    },
+    "originals": {
+      "alt": "Perfil en blanco y negro de una persona con gorro de lana claro.",
+      "credit": "Foto: Gabrielle Meschini / Unsplash"
+    },
+    "finalCta": {
+      "credit": "Foto de fondo: F aint / Unsplash"
+    }
+  },
+  "pages": {
+    "breadcrumbHome": "Inicio",
+    "legalLabel": "Legales",
+    "notFound": {
+      "seoTitle": "Página no encontrada",
+      "description": "La página que buscás no existe.",
+      "label": "Error 404",
+      "title": "Agotado",
+      "body": "Esta página no existe. Mirá el catálogo.",
+      "ctaCatalog": "Ir al catálogo",
+      "ctaWhatsapp": "Escribinos"
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "description": "Qué datos usamos y tus derechos según la Ley 25.326.",
+      "updated": "Actualizado: octubre de 2026.",
+      "sections": [
+        {
+          "id": "responsable",
+          "title": "Responsable",
+          "body": "TRIM es responsable de los datos que nos compartas (Ley 25.326). Contacto: {email}."
+        },
+        {
+          "id": "sitio",
+          "title": "Este sitio",
+          "body": "No tiene formularios, cookies propias ni seguimiento publicitario."
+        },
+        {
+          "id": "whatsapp-instagram",
+          "title": "WhatsApp e Instagram",
+          "body": "Son servicios de Meta, con sus propias políticas. Usamos lo que nos mandás solo para vender y enviar. No lo compartimos, salvo con quien hace la entrega."
+        },
+        {
+          "id": "derechos",
+          "title": "Tus derechos",
+          "body": "Podés pedir acceso, corrección o borrado de tus datos a {email}. Para reclamos, la Agencia de Acceso a la Información Pública es el órgano de control."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Términos",
+      "description": "Catálogo, precios, reservas y fotos.",
+      "updated": "Actualizado: octubre de 2026.",
+      "sections": [
+        {
+          "id": "reventa",
+          "title": "Reventa independiente",
+          "body": "TRIM no está afiliado a las marcas que vende. Las marcas son de sus dueños."
+        },
+        {
+          "id": "catalogo",
+          "title": "Stock",
+          "body": "Una prenda está confirmada cuando te lo decimos por chat. “Reservado” significa que hay una seña."
+        },
+        {
+          "id": "precios",
+          "title": "Precios",
+          "body": "En pesos. Pueden cambiar sin aviso; vale el que confirmamos al cerrar. El envío se cotiza aparte."
+        },
+        {
+          "id": "fotos",
+          "title": "Fotos",
+          "body": "“Foto ilustrativa” es una imagen de referencia: antes de pagar te mandamos fotos reales. Las fotos de ambientación son de Unsplash, con su licencia y crédito."
+        },
+        {
+          "id": "contacto",
+          "title": "Contacto",
+          "body": "{email}"
+        }
+      ]
+    }
+  },
+  "llms": {
+    "intro": "TRIM revende ropa original de hyper-brands desde {city}, Argentina. No está afiliado a las marcas. Se compra por WhatsApp ({whatsapp}) o Instagram ({instagram}). Envíos a todo el país.",
+    "brands": "Marcas",
+    "catalog": "Catálogo",
+    "catalogAll": "Catálogo completo",
+    "stock": "En stock",
+    "faq": "Preguntas frecuentes"
+  }
+}

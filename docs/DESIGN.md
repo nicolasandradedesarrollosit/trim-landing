@@ -42,29 +42,38 @@ Radius is 0 everywhere; the only rounded shapes are the logo's own corners, the 
 
 Display sizes: `text-mega` (hero-scale words), `text-giant` (section openers), `text-headline`, `text-title`. The TRIM wordmark itself is never typeset: it is the traced logo.
 
-## 4. Layout
+## 4. Voice
+
+All text is in `src/config/copy.json`. Write like a reseller's Instagram, not like a brochure:
+
+- One idea per sentence, about 12 words max. Fragments are fine ("Tienda oficial o drop.").
+- Voseo, plain verbs: "Mirá", "Tocá", "Escribinos".
+- Do not explain the interface or repeat what the layout already shows.
+- No selling adjectives ("increíble", "exclusivo", "premium") and no hype slogans.
+
+## 5. Layout
 
 - Container `.wrap`: max 90rem, fluid gutter.
 - Sections alternate paper and full-bleed black blocks (`.block-ink`, with a faint SVG film grain): hero → brand marquee (ink) → En stock → cities (ink) → cómo comprar → originales (ink) → preguntas → escribinos (ink, photo) → footer (ink).
 - Section opener (`.opener`): giant title left, mono aside right, rule underneath.
 - Shelf (`.shelf`): 1 → 2 → 3 → 4 columns; cards in a row end on the same line.
 
-## 5. Photography
+## 6. Photography
 
 - Editorial photos are shown in black and white (`.photo-mono`) so they sit inside the palette; product photos stay in colour.
 - Every photo carries a mono credit caption; licences are listed in `docs/CREDITS.md`.
 
-## 6. Motion
+## 7. Motion
 
 Three moments only: the brand marquee (pauses on hover), the slow spin of the hero and closing stars, and a small zoom on product photos on hover. All disabled under `prefers-reduced-motion`.
 
-## 7. Logo usage
+## 8. Logo usage
 
 - `Logo.astro` `variant="wordmark"`: header and giant hero type. `variant="badge"`: footer, OG image.
 - Logos inherit `currentColor`: black on paper, paper on ink. Never recolour to anything else, never add the chrome gradient to the wordmark.
 - Files: `public/brand/logo-badge(.svg|-white.svg)`, `wordmark(.svg|-white.svg)`, `mark.svg` (star). Regenerate everything with `npm run brand` after replacing `brand-src/*.png`.
 - App icon / favicon: white star on a black rounded tile.
 
-## 8. Accessibility floor
+## 9. Accessibility floor
 
 Visible focus outlines, skip link, sticky header offset for anchors, `<details>` for menu and FAQ (keyboard-friendly, no JS), decorative SVGs `aria-hidden`, every product button has an accessible name with the garment, contrast ≥ 4.5:1 for text.

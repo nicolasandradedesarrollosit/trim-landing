@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { BRAND_SLUGS, CATEGORY_SLUGS, CONDITION_LABEL, STATUS_LABEL } from './config/site';
+import { BRAND_SLUGS, CATEGORY_SLUGS, CONDITIONS, STATUSES } from './config/site';
 
 /**
  * Catalogue. One Markdown file per garment in src/content/products/ (files starting with
@@ -22,8 +22,8 @@ const products = defineCollection({
       color: z.string().max(30).optional(),
       /** Sizes in stock, as written on the label ("S", "M", "42", "Único"). */
       sizes: z.array(z.string().max(8)).min(1),
-      condition: z.enum(Object.keys(CONDITION_LABEL) as [keyof typeof CONDITION_LABEL]).default('nuevo'),
-      status: z.enum(Object.keys(STATUS_LABEL) as [keyof typeof STATUS_LABEL]).default('disponible'),
+      condition: z.enum(CONDITIONS).default('nuevo'),
+      status: z.enum(STATUSES).default('disponible'),
       /** Price in ARS. Leave empty to show "Consultar precio". */
       price: z.number().int().positive().optional(),
       /** Portrait photo, at least 900px wide; shown at 4:5. */

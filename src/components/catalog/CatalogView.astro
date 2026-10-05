@@ -5,6 +5,7 @@
  */
 import ProductCard from './ProductCard.astro';
 import { brandUrl, brandsInStock, catalogUrl, type Product } from '../../lib/content';
+import { copy, fill } from '../../lib/copy';
 
 interface Props {
   /** Every product, for the filter counts. */
@@ -23,17 +24,17 @@ const available = products.filter((p) => p.data.status === 'disponible').length;
 
 <header class="wrap pt-8 pb-10">
   <p class="label flex justify-between border-b border-ink pb-3">
-    <span>Catálogo</span>
-    <span>{products.length} prendas · {available} disponibles</span>
+    <span>{copy.catalog.label}</span>
+    <span>{fill(copy.catalog.count, { total: products.length, available })}</span>
   </p>
   <h1 class="display mt-6 pt-[0.14em] text-mega break-words">{title}</h1>
   <p class="mt-6 max-w-2xl text-lg text-graphite">{intro}</p>
 
-  <nav aria-label="Filtrar por marca" class="mt-8">
+  <nav aria-label={copy.catalog.filterLabel} class="mt-8">
     <ul role="list" class="flex flex-wrap gap-2">
       <li>
         <a href={catalogUrl} class="chip" aria-current={active ? undefined : 'page'}>
-          Todas <span class="chip__count">{all.length}</span>
+          {copy.catalog.filterAll} <span class="chip__count">{all.length}</span>
         </a>
       </li>
       {
@@ -49,7 +50,7 @@ const available = products.filter((p) => p.data.status === 'disponible').length;
   </nav>
 </header>
 
-<section class="wrap pb-[var(--space-section)]" aria-label="Prendas">
+<section class="wrap pb-[var(--space-section)]" aria-label={copy.catalog.listLabel}>
   <div class="shelf">
     {products.map((p, i) => <ProductCard product={p} as="h2" eager={i < 2} />)}
   </div>

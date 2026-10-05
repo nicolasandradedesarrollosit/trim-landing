@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CatalogView from '../../components/catalog/CatalogView.astro';
 import { brandUrl, brandsInStock, catalogUrl, getProducts } from '../../lib/content';
+import { copy, fill } from '../../lib/copy';
 import { breadcrumbLd, collectionLd, crumbs } from '../../lib/seo';
 
 /** One page per brand with at least one garment; brands without stock have no page. */
@@ -12,24 +13,26 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { brand, products, all } = Astro.props;
+const t = copy.catalog;
 const path = brandUrl(brand.slug);
-const description = `${brand.name} original en Argentina: ${products.length} ${products.length === 1 ? 'prenda' : 'prendas'} en el catálogo de TRIM. Consultá talle y precio por WhatsApp.`;
+const count = products.length === 1 ? t.one : fill(t.many, { count: products.length });
+const description = fill(t.brandDescription, { brand: brand.name, count });
 // Thin brand pages stay out of the index until they have a real shelf.
 const noindex = products.length < 3;
 ---
 
 <BaseLayout
-  seo={{ title: `${brand.name} original`, description, noindex }}
+  seo={{ title: fill(t.brandSeoTitle, { brand: brand.name }), description, noindex }}
   jsonLd={[
-    collectionLd({ name: `${brand.name} en TRIM`, description, path, products }),
-    breadcrumbLd(crumbs({ name: 'Catálogo', href: catalogUrl }, { name: brand.name, href: path })),
+    collectionLd({ name: fill(t.brandListName, { brand: brand.name }), description, path, products }),
+    breadcrumbLd(crumbs({ name: t.title, href: catalogUrl }, { name: brand.name, href: path })),
   ]}
 >
   <CatalogView
     all={all}
     products={products}
     title={brand.name}
-    intro={`Las prendas de ${brand.name} que tenemos ahora. ¿Buscás otra? Escribinos y te decimos si la podemos conseguir.`}
+    intro={fill(t.brandIntro, { brand: brand.name })}
     active={brand.slug}
   />
 </BaseLayout>

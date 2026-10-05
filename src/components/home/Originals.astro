@@ -2,37 +2,21 @@
 /**
  * Authenticity: the reason to buy from TRIM instead of a random seller. Laid out as an
  * oversized hang tag with the checks every garment passes, plus the oval "sticker".
- * TODO: keep these claims in sync with how the business actually verifies stock.
+ * Texts in copy.json (`home.originals`); keep them in sync with how the business verifies stock.
  */
 import { Image } from 'astro:assets';
 import Star from '../ui/Star.astro';
 import Barcode from '../ui/Barcode.astro';
 import photo from '../../assets/photos/beanie-profile.jpg';
+import { copy } from '../../lib/copy';
 
-const checks = [
-  {
-    title: 'Comprobante de compra',
-    body: 'Cada prenda sale de una tienda oficial, de la web de la marca o de un drop. Si querés ver el comprobante, te lo mostramos.',
-  },
-  {
-    title: 'Etiquetas y tags',
-    body: 'Revisamos etiquetas internas, tags de cartón, costuras y códigos contra la temporada de cada prenda.',
-  },
-  {
-    title: 'Fotos reales',
-    body: 'Antes de que pagues te mandamos fotos de la prenda que te llevás, no de catálogo.',
-  },
-  {
-    title: 'Si hay dudas, no entra',
-    body: 'Lo que no podemos comprobar no se publica. Preferimos tener menos stock.',
-  },
-];
+const t = copy.home.originals;
 ---
 
 <section id="originales" class="block-ink section" aria-labelledby="originals-title">
   <div class="wrap grid gap-x-[var(--col-gap)] gap-y-14 lg:grid-cols-12">
     <div class="relative lg:col-span-5">
-      <h2 id="originals-title" class="display text-giant">Si no es original, no entra.</h2>
+      <h2 id="originals-title" class="display text-giant">{t.title}</h2>
 
       <!-- The oval sticker echoes the badge logo -->
       <div
@@ -40,8 +24,8 @@ const checks = [
         aria-hidden="true"
       >
         <div class="grid justify-items-center gap-1 text-center">
-          <span class="display text-5xl md:text-6xl">100% original</span>
-          <span class="label text-fog">Verificado por TRIM</span>
+          <span class="display text-5xl md:text-6xl">{t.sticker}</span>
+          <span class="label text-fog">{t.stickerSub}</span>
         </div>
         <Star class="absolute -top-7 right-[12%] w-16" />
       </div>
@@ -49,13 +33,13 @@ const checks = [
       <figure class="mt-12 hidden max-w-xs lg:block">
         <Image
           src={photo}
-          alt="Perfil en blanco y negro de una persona con gorro de lana claro y buzo con capucha oscuro."
+          alt={copy.photos.originals.alt}
           width={480}
           widths={[320, 480]}
           sizes="20rem"
           class="photo-mono aspect-square w-full object-cover"
         />
-        <figcaption class="label mt-2 text-fog">Foto: Gabrielle Meschini / Unsplash</figcaption>
+        <figcaption class="label mt-2 text-fog">{copy.photos.originals.credit}</figcaption>
       </figure>
     </div>
 
@@ -63,12 +47,12 @@ const checks = [
     <div class="lg:col-span-6 lg:col-start-7">
       <div class="relative bg-tag text-ink">
         <div class="flex items-center justify-between border-b border-dashed border-fog px-5 py-4 md:px-8">
-          <span class="label">Control de autenticidad</span>
+          <span class="label">{t.tagTitle}</span>
           <span class="size-3.5 rounded-full bg-ink shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)]" aria-hidden="true"></span>
         </div>
         <dl class="grid px-5 md:px-8">
           {
-            checks.map((c) => (
+            t.checks.map((c) => (
               <div class="grid gap-1 border-b border-rule py-5 md:grid-cols-[13rem_1fr] md:gap-6">
                 <dt class="label pt-1">
                   <span aria-hidden="true">✓ </span>
@@ -81,7 +65,7 @@ const checks = [
         </dl>
         <div class="flex items-end justify-between gap-4 px-5 py-5 md:px-8">
           <Barcode value="trim-originales" class="h-10 w-40" />
-          <span class="label text-steel">TRIM® · Buenos Aires</span>
+          <span class="label text-steel">{t.tagFoot}</span>
         </div>
       </div>
     </div>

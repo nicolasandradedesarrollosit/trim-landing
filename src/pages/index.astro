@@ -10,6 +10,7 @@ import Faq from '../components/home/Faq.astro';
 import FinalCta from '../components/home/FinalCta.astro';
 import { SITE } from '../config/site';
 import { getProducts } from '../lib/content';
+import { copy } from '../lib/copy';
 import { faqLd } from '../lib/seo';
 
 const products = await getProducts();
@@ -20,7 +21,7 @@ const topUp = products.filter((p) => !p.data.featured && p.data.status === 'disp
 const shelf = [...featured, ...topUp].slice(0, FEATURED_MAX);
 ---
 
-<BaseLayout seo={{ title: SITE.name, description: SITE.description }} jsonLd={[faqLd()]}>
+<BaseLayout seo={{ title: SITE.name, description: copy.site.description }} jsonLd={[faqLd()]}>
   <Hero products={products} />
   <BrandStrip />
   <InStock featured={shelf} total={products.length} />

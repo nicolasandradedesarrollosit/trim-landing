@@ -3,6 +3,7 @@
 import ProductCard from '../catalog/ProductCard.astro';
 import Icon from '../ui/Icon.astro';
 import { catalogUrl, type Product } from '../../lib/content';
+import { copy, fill } from '../../lib/copy';
 
 interface Props {
   featured: Product[];
@@ -13,9 +14,9 @@ const { featured, total } = Astro.props;
 
 <section id="stock" class="wrap section" aria-labelledby="stock-title">
   <div class="opener">
-    <h2 id="stock-title" class="opener__title">En stock</h2>
+    <h2 id="stock-title" class="opener__title">{copy.home.inStock.title}</h2>
     <a href={catalogUrl} class="label link flex items-center gap-2">
-      Ver las {total} prendas del catálogo <Icon name="arrow" class="size-4" />
+      {fill(copy.home.inStock.link, { total })} <Icon name="arrow" class="size-4" />
     </a>
   </div>
   <div class="shelf">

@@ -1,0 +1,22 @@
+---
+/** Renders a legal page from copy.json (`pages.privacy`, `pages.terms`). Bodies may contain `{email}`. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { copy, rich } from '../../lib/copy';
+
+interface Props {
+  page: typeof copy.pages.privacy;
+}
+const { page } = Astro.props;
+---
+
+<PageLayout eyebrow={copy.pages.legalLabel} title={page.title} description={page.description}>
+  <p><em>{page.updated}</em></p>
+  {
+    page.sections.map((s) => (
+      <>
+        <h2 id={s.id}>{s.title}</h2>
+        <p set:html={rich(s.body)} />
+      </>
+    ))
+  }
+</PageLayout>

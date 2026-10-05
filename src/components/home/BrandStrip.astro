@@ -2,10 +2,11 @@
 /** Black band with every brand TRIM carries, scrolling. Pauses on hover and under reduced motion. */
 import Star from '../ui/Star.astro';
 import { BRANDS } from '../../config/site';
+import { copy } from '../../lib/copy';
 ---
 
-<section class="block-ink border-y border-ink py-5" aria-label="Marcas que trabajamos">
-  <p class="sr-only">Marcas que trabajamos: {BRANDS.map((b) => b.name).join(', ')}.</p>
+<section class="block-ink border-y border-ink py-5" aria-label={copy.home.brandStrip.label}>
+  <p class="sr-only">{copy.home.brandStrip.label}: {BRANDS.map((b) => b.name).join(', ')}.</p>
   <div class="marquee" aria-hidden="true">
     {
       [0, 1].map(() => (

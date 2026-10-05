@@ -5,23 +5,23 @@
  * from fewest to most. Everything is derived from BRANDS/CITIES in site.ts.
  */
 import { BRANDS, CITIES } from '../../config/site';
+import { copy, fill } from '../../lib/copy';
 
 const cities = CITIES.map((c) => ({ ...c, brands: BRANDS.filter((b) => b.city === c.code) }))
   .filter((c) => c.brands.length > 0)
   .sort((a, b) => a.brands.length - b.brands.length);
 const max = Math.max(...cities.map((c) => c.brands.length));
-const words = ['cero', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce'];
-const say = (n: number) => words[n] ?? String(n);
+const t = copy.home.cities;
+const say = (n: number) => t.numberWords[n] ?? String(n);
 ---
 
 <section class="block-ink section overflow-hidden" aria-labelledby="cities-title">
   <div class="wrap">
     <div class="opener border-rule-dark">
-      <h2 id="cities-title" class="opener__title">
-        {say(cities.length)} ciudades,<br />{say(BRANDS.length)} marcas
-      </h2>
+      <!-- whitespace-pre-line: a "\n" in copy.json breaks the line -->
+      <h2 id="cities-title" class="opener__title whitespace-pre-line">{fill(t.title, { cities: say(cities.length), brands: say(BRANDS.length) })}</h2>
       <p class="label max-w-xs text-fog md:text-right">
-        De dónde sale lo que vendemos. El número es cuántas marcas traemos de cada ciudad.
+        {t.aside}
       </p>
     </div>
 
@@ -38,7 +38,7 @@ const say = (n: number) => words[n] ?? String(n);
             </p>
             <p
               class="display md:mt-[calc(var(--step)*clamp(2.5rem,7vw,6.5rem))] text-[clamp(9rem,4rem+18vw,22rem)] leading-[0.78]"
-              aria-label={`${c.brands.length} marcas`}
+              aria-label={fill(t.countLabel, { count: c.brands.length })}
             >
               {c.brands.length}
             </p>

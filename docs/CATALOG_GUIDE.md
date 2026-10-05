@@ -31,6 +31,8 @@ Every garment is one Markdown file in `src/content/products/`. The frontmatter i
 
 The Markdown body below the frontmatter is optional and not rendered yet.
 
+The labels around the data ("Talles", "Nuevo con etiqueta", "Reservado", category names, the WhatsApp message) are in `src/config/copy.json` under `product` and `categories`.
+
 ## 3. Reserve, sell, restock
 
 - **Reserved**: `status: reservado`. The card gets a "Reservado" flag; the button still works for questions.

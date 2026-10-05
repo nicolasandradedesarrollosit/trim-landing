@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../../config/site';
 import { absUrl } from '../../lib/seo';
+import { copy } from '../../lib/copy';
 
 export interface SeoProps {
   title: string;
@@ -23,7 +24,7 @@ const {
 const TITLE_MAX = 60;
 const branded = `${title} | ${SITE.name}`;
 const fullTitle =
-  title === SITE.name ? `${SITE.name}: hyper-brands originales en Argentina` : branded.length <= TITLE_MAX ? branded : title;
+  title === SITE.name ? copy.site.seoTitleHome : branded.length <= TITLE_MAX ? branded : title;
 const canonicalUrl = canonical ?? absUrl(Astro.url.pathname);
 const imageUrl = absUrl(image.url);
 const robots = noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1';

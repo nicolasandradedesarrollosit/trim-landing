@@ -8,6 +8,7 @@ The customer-facing site is in Spanish (es-AR). Code, comments and documentation
 - **Adding/updating/selling a garment: [`docs/CATALOG_GUIDE.md`](docs/CATALOG_GUIDE.md)** + template `src/content/products/_template.md`
 - Design system, Pinterest references and logo usage: [`docs/DESIGN.md`](docs/DESIGN.md)
 - Photo credits and licences: [`docs/CREDITS.md`](docs/CREDITS.md)
+- **Every text on the site: [`src/config/copy.json`](src/config/copy.json)** (see "Editing texts")
 
 ## Development
 
@@ -32,8 +33,20 @@ These values are placeholders and must be replaced:
 | WhatsApp number (digits, international format, no `+`) | `CONTACT.whatsapp` |
 | Instagram handle | `CONTACT.instagram` |
 | Contact e-mail on the site's domain | `SITE.email` |
-| Payment, shipping and FAQ answers | `STEPS` and `FAQ` in `src/config/site.ts`, `src/components/home/Originals.astro` |
+| Payment, shipping, FAQ and authenticity texts | `home.howToBuy`, `home.faq`, `home.originals` in `src/config/copy.json` |
 | **Catalogue** | the 8 products in `src/content/products/` are **demo entries** with stock photos (`illustrative: true`). Replace them with real stock and real photos. |
+
+## Editing texts
+
+Every customer-facing text lives in **`src/config/copy.json`**: meta titles and descriptions, the hero, section titles, buying steps, FAQ, authenticity checks, product-tag labels, the WhatsApp messages, category names, photo alt texts and credits, the 404 and the legal pages. Components never hardcode copy.
+
+- Edit a value, save: the dev server reloads. Then run `npm run check`; a missing or renamed key fails the check.
+- Keep the keys, change only the values. Lists (`steps`, `checks`, FAQ `items`, legal `sections`) can grow or shrink.
+- `{placeholders}` are filled in by the code; keep them when rewording: `{total}`, `{available}`, `{city}`, `{brand}`, `{count}`, `{cities}`, `{brands}`, `{item}`, `{sizes}`, `{ref}`, `{n}`, `{whatsapp}`, `{instagram}`, and `{email}` in legal pages (rendered as a link).
+- `\n` inside a title forces a line break (`home.cities.title`, `home.howToBuy.title`).
+- Voice: short sentences, voseo, no filler (see `docs/DESIGN.md`, "Voice").
+
+Brand names, cities and the contact numbers are data, not copy: they stay in `src/config/site.ts`.
 
 ## Adding a garment
 
@@ -53,7 +66,8 @@ scripts/
   trace-logos.mjs         # PNG -> SVG (potrace) into public/brand/ and src/components/ui/paths/
   generate-brand-assets.mjs  # favicon.svg/.ico, apple-touch-icon, manifest icons, og-default.png
 src/
-  config/site.ts          # brand, contact, brands + cities, categories, steps, FAQ: single source of truth
+  config/site.ts          # brand data, contact, brands + cities, category/status keys, routes
+  config/copy.json        # every customer-facing text (see "Editing texts")
   content.config.ts       # `products` collection schema (frontmatter validation)
   content/products/       # one .md per garment + img/ (+ _template.md)
   assets/photos/          # editorial photos (Unsplash licence, see docs/CREDITS.md)
@@ -66,10 +80,12 @@ src/
     layout/               # Header (sticky, CSS-only mobile menu), Footer
     home/                 # Hero, BrandStrip, InStock, Cities, HowToBuy, Originals, Faq, FinalCta
     catalog/              # ProductCard (hang tag), CatalogView (title + brand filter + shelf)
+    page/                 # LegalPage (renders pages.privacy / pages.terms from copy.json)
     seo/                  # SEO meta tags, JsonLd
   lib/
     content.ts            # getProducts, brandsInStock, URL builders, formatPrice, refCode
     contact.ts            # whatsappUrl, productMessage, instagramUrl
+    copy.ts               # typed `copy` import, fill() for {placeholders}, rich() for legal bodies
     seo.ts                # absUrl, ClothingStore/WebSite/FAQPage/CollectionPage/Breadcrumb JSON-LD, graph()
   pages/                  # routes; folder names are URLs, so they stay in Spanish
     index.astro           # landing

@@ -1,33 +1,6 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
-import { SITE } from '../config/site';
+import LegalPage from '../components/page/LegalPage.astro';
+import { copy } from '../lib/copy';
 ---
 
-<PageLayout
-  eyebrow="Legales"
-  title="Términos"
-  description="Cómo funcionan el catálogo, los precios, las reservas y las fotos de este sitio."
->
-  <p><em>Última actualización: octubre de 2026.</em></p>
-  <h2 id="reventa">Reventa independiente</h2>
-  <p>{SITE.disclaimer}</p>
-  <h2 id="catalogo">Catálogo y stock</h2>
-  <p>
-    El catálogo muestra las prendas que tenemos al momento de publicarlo. Una prenda está confirmada recién cuando te lo
-    decimos por WhatsApp o Instagram. Las prendas “Reservadas” tienen una seña en curso y pueden volver a estar
-    disponibles.
-  </p>
-  <h2 id="precios">Precios</h2>
-  <p>
-    Los precios están en pesos argentinos y pueden cambiar sin aviso. El precio que vale es el que te confirmamos al
-    cerrar la compra. El envío se cotiza aparte según el destino.
-  </p>
-  <h2 id="fotos">Fotos</h2>
-  <p>
-    Las prendas marcadas como “Foto ilustrativa” muestran una imagen de referencia y no la prenda exacta. Antes de que
-    pagues te mandamos fotos reales. Las fotos de ambientación del sitio son de fotógrafos de Unsplash, usadas bajo la
-    licencia de Unsplash; cada una lleva el crédito al pie.
-  </p>
-  <h2 id="contacto">Contacto</h2>
-  <p>Por cualquier duda: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
-</PageLayout>
+<LegalPage page={copy.pages.terms} />

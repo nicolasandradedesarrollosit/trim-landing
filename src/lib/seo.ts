@@ -1,4 +1,5 @@
-import { FAQ, SITE } from '../config/site';
+import { SITE } from '../config/site';
+import { copy } from './copy';
 import { instagramUrl, whatsappUrl } from './contact';
 import { brandOf, type Product } from './content';
 
@@ -16,7 +17,7 @@ export function organizationLd(): JsonLd {
     '@id': ORG_ID,
     name: SITE.name,
     url: SITE.url,
-    description: SITE.description,
+    description: copy.site.description,
     logo: { '@type': 'ImageObject', url: absUrl(SITE.logoPng), width: 512, height: 512 },
     image: absUrl(SITE.defaultOgImage),
     foundingDate: SITE.foundingDate,
@@ -35,7 +36,7 @@ export function websiteLd(): JsonLd {
     '@id': WEBSITE_ID,
     url: SITE.url,
     name: SITE.name,
-    description: SITE.description,
+    description: copy.site.description,
     inLanguage: SITE.locale,
     publisher: { '@id': ORG_ID },
   };
@@ -45,7 +46,7 @@ export function faqLd(): JsonLd {
   return {
     '@type': 'FAQPage',
     '@id': `${SITE.url}/#faq`,
-    mainEntity: FAQ.map((item) => ({
+    mainEntity: copy.home.faq.items.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -59,7 +60,7 @@ export interface Crumb {
 }
 
 /** Breadcrumb trail that always starts at the home page. */
-export const crumbs = (...items: Crumb[]): Crumb[] => [{ name: 'Inicio', href: '/' }, ...items];
+export const crumbs = (...items: Crumb[]): Crumb[] => [{ name: copy.pages.breadcrumbHome, href: '/' }, ...items];
 
 export function breadcrumbLd(items: Crumb[]): JsonLd {
   return {
