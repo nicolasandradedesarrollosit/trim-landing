@@ -55,26 +55,25 @@
       ]
     },
     "originals": {
-      "title": "Si no es original, no entra.",
-      "sticker": "100% original",
+      "title": "Calidad premium, sino no entra.",
+      "sticker": "Calidad de China",
       "stickerSub": "Verificado por TRIM",
-      "tagTitle": "Control de autenticidad",
+      "tagTitle": "Control de calidad",
       "tagFoot": "TRIM® · Rosario",
       "checks": [
         { "title": "Comprobante", "body": "Tienda oficial, web de la marca o drop." },
-        { "title": "Etiquetas", "body": "Revisamos tags, costuras y códigos." },
+        { "title": "Etiquetas", "body": "Revisamos costuras y terminaciones" },
         { "title": "Fotos reales", "body": "De la prenda que te llevás." }
       ]
     },
     "faq": {
       "title": "Preguntas",
       "items": [
-        { "question": "¿Son originales?", "answer": "Sí. Tienda oficial o drop. Si querés, te mostramos el comprobante." },
+        { "question": "¿Vienen de China?", "answer": "Sí. Todas las prendas que vendemos vienen de China Calidad G5." },
         { "question": "¿Cómo compro?", "answer": "Tocá “Consultar” y seguimos por WhatsApp." },
         { "question": "¿Hacen envíos?", "answer": "A todo el país. En Rosario, también en mano." },
         { "question": "¿Cómo pago?", "answer": "Transferencia o efectivo." },
-        { "question": "¿Consiguen otras prendas?", "answer": "Pasanos marca, prenda y talle." },
-        { "question": "¿Qué es “como nuevo”?", "answer": "Usado, sin marcas ni desgaste. Te mandamos fotos antes de pagar." }
+        { "question": "¿Consiguen otras prendas?", "answer": "Pasanos marca, prenda y talle." }
       ]
     },
     "finalCta": {
@@ -84,8 +83,8 @@
   },
   "catalog": {
     "label": "Catálogo",
-    "seoTitle": "Catálogo de hyper-brands originales",
-    "description": "Buzos, remeras y más de Corteiz, Supreme, Stüssy y otras marcas. Originales. Consultá talle y precio por WhatsApp.",
+    "seoTitle": "Catálogo de hyper-brands desde China",
+    "description": "Buzos, remeras y más de Corteiz, Supreme, Stüssy y otras marcas. Traídas de China. Consultá talle y precio por WhatsApp.",
     "title": "Catálogo",
     "intro": "Lo que hay ahora. Tocá “Consultar” en cualquier prenda.",
     "count": "{total} prendas · {available} disponibles",
