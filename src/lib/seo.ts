@@ -22,7 +22,7 @@ export function organizationLd(): JsonLd {
     image: absUrl(SITE.defaultOgImage),
     foundingDate: SITE.foundingDate,
     email: SITE.email,
-    address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
+    address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressRegion: SITE.region, addressCountry: SITE.country },
     areaServed: { '@type': 'Country', name: 'Argentina' },
     currenciesAccepted: 'ARS',
     sameAs: [instagramUrl],

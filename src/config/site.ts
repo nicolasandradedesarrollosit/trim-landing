@@ -11,8 +11,10 @@ export const SITE = {
   url: 'https://www.trim.com.ar',
   locale: 'es-AR',
   ogLocale: 'es_AR',
-  timeZone: 'America/Argentina/Buenos_Aires',
-  city: 'Buenos Aires',
+  // IANA zone for Santa Fe province (there is no Rosario zone); same UTC-3 as the rest of Argentina.
+  timeZone: 'America/Argentina/Cordoba',
+  city: 'Rosario',
+  region: 'Santa Fe',
   country: 'AR',
   defaultOgImage: '/og-default.png',
   logo: '/brand/logo-badge.svg',

@@ -65,7 +65,7 @@ const og = `
   <rect width="1200" height="630" fill="${INK}"/>
   <g font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="22" letter-spacing="2" fill="#a7abb0">
     <text x="70" y="86">TRIM®</text>
-    <text x="1130" y="86" text-anchor="end">BUENOS AIRES, AR</text>
+    <text x="1130" y="86" text-anchor="end">ROSARIO, AR</text>
     <text x="70" y="566">HYPER-BRANDS ORIGINALES</text>
     <text x="1130" y="566" text-anchor="end">CORTEIZ · SUPREME · STÜSSY · BAPE</text>
   </g>

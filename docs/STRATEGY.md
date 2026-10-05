@@ -22,7 +22,7 @@ TRIM is an **independent reseller**. It is not affiliated with any brand it carr
 
 ## 4. Audience
 
-- 16–30, Buenos Aires first (CABA + GBA hand delivery), then the rest of the country by courier.
+- 16–30, Rosario first (hand delivery in the city), then the rest of the country by courier.
 - Follows drop culture on Instagram/TikTok, knows the brands, distrusts unknown sellers.
 - Buys from the phone: the site is designed mobile-first.
 

@@ -12,7 +12,7 @@
   "nav": {
     "catalog": "Catálogo",
     "howToBuy": "Cómo comprar",
-    "originals": "Originales",
+    "originals": "G5 Calidad Premium",
     "faq": "Preguntas",
     "privacy": "Privacidad",
     "terms": "Términos",
@@ -57,7 +57,7 @@
       "steps": [
         { "title": "Elegís", "body": "Mirá el catálogo." },
         { "title": "Consultás", "body": "Tocá “Consultar” y escribinos." },
-        { "title": "Te llega", "body": "Envío a todo el país o entrega en CABA." }
+        { "title": "Te llega", "body": "Envío a todo el país o entrega en Rosario." }
       ]
     },
     "originals": {
@@ -65,7 +65,7 @@
       "sticker": "100% original",
       "stickerSub": "Verificado por TRIM",
       "tagTitle": "Control de autenticidad",
-      "tagFoot": "TRIM® · Buenos Aires",
+      "tagFoot": "TRIM® · Rosario",
       "checks": [
         { "title": "Comprobante", "body": "Tienda oficial, web de la marca o drop." },
         { "title": "Etiquetas", "body": "Revisamos tags, costuras y códigos." },
@@ -78,7 +78,7 @@
       "items": [
         { "question": "¿Son originales?", "answer": "Sí. Tienda oficial o drop. Si querés, te mostramos el comprobante." },
         { "question": "¿Cómo compro?", "answer": "Tocá “Consultar” y seguimos por WhatsApp." },
-        { "question": "¿Hacen envíos?", "answer": "A todo el país. En CABA, también en mano." },
+        { "question": "¿Hacen envíos?", "answer": "A todo el país. En Rosario, también en mano." },
         { "question": "¿Cómo pago?", "answer": "Transferencia o efectivo." },
         { "question": "¿Consiguen otras prendas?", "answer": "Pasanos marca, prenda y talle." },
         { "question": "¿Qué es “como nuevo”?", "answer": "Usado, sin marcas ni desgaste. Te mandamos fotos antes de pagar." }

@@ -23,9 +23,9 @@ const time = new Intl.DateTimeFormat('es-AR', {
   hour: '2-digit',
   minute: '2-digit',
   hourCycle: 'h23',
-  timeZone: 'America/Argentina/Buenos_Aires',
+  timeZone: 'America/Argentina/Cordoba',
 });
-/** "4/10, 17:52" in Buenos Aires time. */
+/** "4/10, 17:52" in Rosario time (Santa Fe uses the America/Argentina/Cordoba zone). */
 export const formatRateTime = (iso: string) => time.format(new Date(iso));
 
 /**
