@@ -41,7 +41,7 @@ The site has **no cart and no forms on purpose**: in this market the sale closes
 - Only garments physically in stock (or with a confirmed purchase) are listed.
 - Real photos of the actual garment as soon as possible; stock photos must be flagged `illustrative: true`, which prints "Foto ilustrativa" on the card.
 - Mark `reservado` when a deposit is paid; `vendido` when delivered. Sold items stay visible for a while as social proof, at the end of the shelf.
-- Prices in ARS, or "A consultar" when they move with the exchange rate.
+- Prices are set in USD and shown in ARS at the live dollar blue "venta" rate (DolarAPI), so they follow the market without manual updates. "A consultar" when there is no price yet.
 
 ## 7. Legal and brand safety
 

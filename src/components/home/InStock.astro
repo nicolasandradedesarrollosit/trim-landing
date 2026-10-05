@@ -2,6 +2,7 @@
 /** Featured garments as hang tags, with a link to the full catalogue. */
 import ProductCard from '../catalog/ProductCard.astro';
 import Icon from '../ui/Icon.astro';
+import RateNote from '../catalog/RateNote.astro';
 import { catalogUrl, type Product } from '../../lib/content';
 import { copy, fill } from '../../lib/copy';
 
@@ -15,9 +16,12 @@ const { featured, total } = Astro.props;
 <section id="stock" class="wrap section" aria-labelledby="stock-title">
   <div class="opener">
     <h2 id="stock-title" class="opener__title">{copy.home.inStock.title}</h2>
-    <a href={catalogUrl} class="label link flex items-center gap-2">
-      {fill(copy.home.inStock.link, { total })} <Icon name="arrow" class="size-4" />
-    </a>
+    <div class="grid gap-2 md:justify-items-end">
+      <RateNote class="text-steel" />
+      <a href={catalogUrl} class="label link flex items-center gap-2">
+        {fill(copy.home.inStock.link, { total })} <Icon name="arrow" class="size-4" />
+      </a>
+    </div>
   </div>
   <div class="shelf">
     {featured.map((p) => <ProductCard product={p} />)}

@@ -24,8 +24,11 @@ const products = defineCollection({
       sizes: z.array(z.string().max(8)).min(1),
       condition: z.enum(CONDITIONS).default('nuevo'),
       status: z.enum(STATUSES).default('disponible'),
-      /** Price in ARS. Leave empty to show "Consultar precio". */
-      price: z.number().int().positive().optional(),
+      /**
+       * Price in USD. The site shows it in ARS at the live dollar rate (see PRICING in
+       * src/config/site.ts). Leave empty to show "A consultar".
+       */
+      priceUsd: z.number().positive().optional(),
       /** Portrait photo, at least 900px wide; shown at 4:5. */
       image: image(),
       imageAlt: z.string().min(10),

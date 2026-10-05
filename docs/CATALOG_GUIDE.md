@@ -21,7 +21,7 @@ Every garment is one Markdown file in `src/content/products/`. The frontmatter i
 | `sizes` | yes | Sizes in stock as on the label: `[S, M]`, `[42]`, `[Único]`. |
 | `condition` | no | `nuevo` (default, new with tags) or `como-nuevo` (used, no visible wear). |
 | `status` | no | `disponible` (default), `reservado` (deposit paid) or `vendido`. |
-| `price` | no | Integer ARS, no dots (`289000`). Leave it out to show "A consultar". |
+| `priceUsd` | no | Price in **USD** (`185`). The site shows it in ARS at the live dollar blue rate, rounded up to $1.000, plus "USD 185" below. Leave it out to show "A consultar". |
 | `image` | yes | Relative path to the photo (`./img/…`). |
 | `imageAlt` | yes | One sentence describing the photo, for screen readers. |
 | `illustrative` | no | `true` while the photo is not the actual garment: the card shows "Foto ilustrativa". |
@@ -38,7 +38,7 @@ The labels around the data ("Talles", "Nuevo con etiqueta", "Reservado", categor
 - **Reserved**: `status: reservado`. The card gets a "Reservado" flag; the button still works for questions.
 - **Sold**: `status: vendido`. The card greys out, the button is disabled and it moves to the end of the shelf. Delete the file after a few weeks.
 - **Size sold, others left**: remove it from `sizes`.
-- **Price change**: edit `price`.
+- **Price change**: edit `priceUsd`. You never need to touch prices when the dollar moves: the ARS amount follows the rate on its own.
 
 ## 4. Brands and brand pages
 
@@ -48,5 +48,5 @@ A brand page (`/catalogo/<brand>/`) exists only while that brand has at least on
 
 - [ ] Photo is of the actual garment (or `illustrative: true`).
 - [ ] Brand logos visible in the photo are fine (it is the product), but never reuse them in TRIM graphics.
-- [ ] `sizes`, `condition`, `status` and `price` match reality.
+- [ ] `sizes`, `condition`, `status` and `priceUsd` match reality.
 - [ ] `npm run check` and `npm run build` pass.

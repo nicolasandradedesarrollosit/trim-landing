@@ -1,0 +1,46 @@
+---
+/**
+ * The dollar rate behind the ARS prices, e.g. "Dólar blue venta $ 1.560 · 4/10, 17:52".
+ * Rendered with the build-time rate; its script then fetches the live rate in the browser
+ * and recalculates every [data-usd] price on the page. If the API fails, the build-time
+ * prices stay. Include it on every page that shows ProductCards.
+ */
+import { copy, fill } from '../../lib/copy';
+import { formatArs, formatRateTime, getBuildRate } from '../../lib/pricing';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const rate = await getBuildRate();
+---
+
+<p class:list={['label', className]} data-rate data-template={copy.pricing.rate}>
+  <span data-rate-label>{fill(copy.pricing.rate, { rate: formatArs(rate.venta) })}</span>{' · '}<time data-rate-time datetime={rate.updatedAt}>{rate.live ? formatRateTime(rate.updatedAt) : copy.pricing.fallback}</time>
+</p>
+
+<script>
+  import { fetchRate, formatArs, formatRateTime, toArs } from '../../lib/pricing';
+
+  async function refreshPrices() {
+    try {
+      const rate = await fetchRate(8000);
+      document.querySelectorAll<HTMLElement>('[data-usd]').forEach((el) => {
+        el.textContent = formatArs(toArs(Number(el.dataset.usd), rate.venta));
+      });
+      document.querySelectorAll<HTMLElement>('[data-rate]').forEach((el) => {
+        const label = el.querySelector('[data-rate-label]');
+        if (label) label.textContent = (el.dataset.template ?? '').replace('{rate}', formatArs(rate.venta));
+        const time = el.querySelector('time[data-rate-time]');
+        if (time) {
+          time.textContent = formatRateTime(rate.updatedAt);
+          time.setAttribute('datetime', rate.updatedAt);
+        }
+      });
+    } catch {
+      // Keep the prices rendered at build time.
+    }
+  }
+
+  refreshPrices();
+</script>

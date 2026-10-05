@@ -7,7 +7,7 @@ season: SS25
 sizes: [S, M]
 condition: nuevo
 status: reservado
-price: 95000
+priceUsd: 60
 image: ./img/white-tee.jpg
 imageAlt: Remera blanca colgada de un perchero negro junto a un sombrero de paja.
 illustrative: true

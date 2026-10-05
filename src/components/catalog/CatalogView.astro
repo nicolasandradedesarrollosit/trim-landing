@@ -4,6 +4,7 @@
  * links, no JS) and the shelf of hang tags.
  */
 import ProductCard from './ProductCard.astro';
+import RateNote from './RateNote.astro';
 import { brandUrl, brandsInStock, catalogUrl, type Product } from '../../lib/content';
 import { copy, fill } from '../../lib/copy';
 
@@ -29,6 +30,7 @@ const available = products.filter((p) => p.data.status === 'disponible').length;
   </p>
   <h1 class="display mt-6 pt-[0.14em] text-mega break-words">{title}</h1>
   <p class="mt-6 max-w-2xl text-lg text-graphite">{intro}</p>
+  <RateNote class="mt-4 text-steel" />
 
   <nav aria-label={copy.catalog.filterLabel} class="mt-8">
     <ul role="list" class="flex flex-wrap gap-2">

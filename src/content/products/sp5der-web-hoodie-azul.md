@@ -6,7 +6,7 @@ color: Azul
 sizes: [M]
 condition: como-nuevo
 status: disponible
-price: 210000
+priceUsd: 135
 image: ./img/blue-hoodie.jpg
 imageAlt: Buzo azul con capucha extendido sobre un piso de madera junto a un jean y zapatillas.
 illustrative: true

@@ -28,8 +28,6 @@ export function brandsInStock(products: Product[]): { brand: Brand; products: Pr
   );
 }
 
-const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
-export const formatPrice = (price: number | undefined) => (price ? ars.format(price) : undefined);
 
 /**
  * Short, stable reference for a garment ("TRM-4K2P"), printed on the tag and sent in the

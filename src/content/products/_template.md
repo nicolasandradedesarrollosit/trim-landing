@@ -10,7 +10,7 @@ season: FW25 # optional
 sizes: [M, L]
 condition: nuevo # nuevo | como-nuevo
 status: disponible # disponible | reservado | vendido
-price: 150000 # ARS, optional: remove the line to show "Precio a consultar"
+priceUsd: 120 # USD, optional: converted to ARS at the live blue rate; remove the line to show "A consultar"
 image: ./img/nombre-de-la-foto.jpg # portrait, at least 900px wide
 imageAlt: Qué se ve en la foto, en una frase.
 illustrative: false # true only while the photo is not the actual garment

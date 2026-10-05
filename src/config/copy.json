@@ -1,8 +1,8 @@
 {
   "site": {
-    "tagline": "Hyper-brands originales.",
-    "description": "Corteiz, Supreme, Stüssy, BAPE y más. Originales, en Argentina. Consultá por WhatsApp.",
-    "seoTitleHome": "TRIM: hyper-brands originales en Argentina",
+    "tagline": "Hyper-brands G5",
+    "description": "Corteiz, Supreme, Stüssy, BAPE y más. La mejor calidad, traídas de China. Consultá por WhatsApp.",
+    "seoTitleHome": "TRIM: hyper-brands traídas de China en Rosario",
     "disclaimer": "TRIM es un revendedor independiente, sin relación con las marcas que vende.",
     "whatsappGreeting": "Hola TRIM! Quiero hacer una consulta.",
     "skipLink": "Saltar al contenido",
@@ -113,6 +113,7 @@
     "season": "Temp.",
     "price": "Precio",
     "priceOnRequest": "A consultar",
+    "priceUsd": "USD {usd}",
     "consult": "Consultar",
     "consultLabel": "{item} por WhatsApp",
     "sold": "Vendido",
@@ -127,6 +128,10 @@
       "reservado": "Reservado",
       "vendido": "Vendido"
     }
+  },
+  "pricing": {
+    "rate": "Dólar blue venta {rate}",
+    "fallback": "referencia"
   },
   "categories": {
     "buzos": "Buzos",
@@ -177,7 +182,7 @@
         {
           "id": "sitio",
           "title": "Este sitio",
-          "body": "No tiene formularios, cookies propias ni seguimiento publicitario."
+          "body": "No tiene formularios, cookies propias ni seguimiento publicitario. Para mostrar los precios en pesos, tu navegador consulta la cotización en dolarapi.com."
         },
         {
           "id": "whatsapp-instagram",

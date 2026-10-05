@@ -6,7 +6,7 @@ color: Celeste
 sizes: [L]
 condition: como-nuevo
 status: disponible
-price: 120000
+priceUsd: 75
 image: ./img/blue-tee.jpg
 imageAlt: Remera celeste jaspeada colgada de una percha contra una pared gris.
 illustrative: true
