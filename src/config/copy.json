@@ -69,8 +69,7 @@
       "checks": [
         { "title": "Comprobante", "body": "Tienda oficial, web de la marca o drop." },
         { "title": "Etiquetas", "body": "Revisamos tags, costuras y códigos." },
-        { "title": "Fotos reales", "body": "De la prenda que te llevás." },
-        { "title": "Si hay dudas", "body": "No se publica." }
+        { "title": "Fotos reales", "body": "De la prenda que te llevás." }
       ]
     },
     "faq": {
